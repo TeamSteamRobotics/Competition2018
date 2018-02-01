@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5119.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Pulls the robot with the winch.
+ * It will automatically stop if the switch
+ * is depressed, so I don't care if you use
+ * button.whileHeld() or button.whenPressed().
  */
 public class PullWinch extends Command {
 	public PullWinch() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kExampleSubsystem);
+		requires(Robot.winchSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -27,22 +30,29 @@ public class PullWinch extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		if (Robot.winchSubsystem.isDepressed()) {
+			Robot.winchSubsystem.move(0);
+		} else {
+			Robot.winchSubsystem.move(1);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return Robot.winchSubsystem.isDepressed();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.winchSubsystem.move(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.winchSubsystem.move(0);
 	}
 }

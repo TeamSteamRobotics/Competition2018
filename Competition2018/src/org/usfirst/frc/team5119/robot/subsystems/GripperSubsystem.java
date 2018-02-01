@@ -22,6 +22,7 @@ public class GripperSubsystem extends Subsystem {
 	DigitalInput closedLimit = new DigitalInput(00000);
 	DigitalInput openLimit = new DigitalInput(00000);
 	DigitalInput boxGrabbedLimit = new DigitalInput(00000);
+	double speedModifier = 1;
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -29,14 +30,14 @@ public class GripperSubsystem extends Subsystem {
 	}
 	
 	public void move(double speed) {
-		gripMotor.set(speed);
+		gripMotor.set(speed*speedModifier);
 	}
 	
-	public boolean isClosed() {
+	public boolean isFullClosed() {
 		return closedLimit.get();
 	}
 	
-	public boolean isOpen() {
+	public boolean isFullOpen() {
 		return openLimit.get();
 	}
 	

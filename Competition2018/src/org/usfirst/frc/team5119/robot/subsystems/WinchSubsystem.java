@@ -20,6 +20,7 @@ public class WinchSubsystem extends Subsystem {
 	
 	Talon winchMotor = new Talon(00000);
 	DigitalInput limitSwitch = new DigitalInput(00000);
+	double speedModifier = 1;
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -27,7 +28,7 @@ public class WinchSubsystem extends Subsystem {
 	}
 	
 	public void move(double speed) {
-		winchMotor.set(speed);
+		winchMotor.set(speed*speedModifier);
 	}
 	
 	public boolean isDepressed() {

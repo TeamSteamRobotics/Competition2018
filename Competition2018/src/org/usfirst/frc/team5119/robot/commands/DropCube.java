@@ -16,7 +16,7 @@ import org.usfirst.frc.team5119.robot.Robot;
 public class DropCube extends Command {
 	public DropCube() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kExampleSubsystem);
+		requires(Robot.gripperSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -27,22 +27,29 @@ public class DropCube extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		if (Robot.gripperSubsystem.isFullOpen()) {
+			Robot.gripperSubsystem.move(0);
+		} else {
+			Robot.gripperSubsystem.move(-1);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return Robot.gripperSubsystem.isFullOpen();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.gripperSubsystem.move(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.gripperSubsystem.move(0);
 	}
 }

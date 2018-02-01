@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5119.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * Release the winch. This should be called with button.whileHeld() because it won't stop.
  */
 public class ReleaseWinch extends Command {
 	public ReleaseWinch() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kExampleSubsystem);
+		requires(Robot.winchSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -27,6 +27,7 @@ public class ReleaseWinch extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.winchSubsystem.move(-1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -38,11 +39,13 @@ public class ReleaseWinch extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.winchSubsystem.move(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.winchSubsystem.move(0);
 	}
 }
