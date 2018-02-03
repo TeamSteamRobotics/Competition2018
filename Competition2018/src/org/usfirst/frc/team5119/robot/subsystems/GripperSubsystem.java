@@ -18,10 +18,10 @@ public class GripperSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	Talon gripMotor = new Talon(00000);
-	DigitalInput closedLimit = new DigitalInput(00000);
-	DigitalInput openLimit = new DigitalInput(00000);
-	DigitalInput boxGrabbedLimit = new DigitalInput(00000);
+	Talon gripMotor = new Talon(2);
+	DigitalInput closedLimit = new DigitalInput(11);
+	DigitalInput openLimit = new DigitalInput(12);
+	DigitalInput boxGrabbedLimit = new DigitalInput(13);
 	double speedModifier = 1;
 	
 	public void initDefaultCommand() {

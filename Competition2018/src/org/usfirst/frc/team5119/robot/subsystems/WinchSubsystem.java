@@ -18,8 +18,8 @@ public class WinchSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	Talon winchMotor = new Talon(00000);
-	DigitalInput limitSwitch = new DigitalInput(00000);
+	Talon winchMotor = new Talon(4);
+	DigitalInput limitSwitch = new DigitalInput(8);
 	double speedModifier = 1;
 
 	public void initDefaultCommand() {

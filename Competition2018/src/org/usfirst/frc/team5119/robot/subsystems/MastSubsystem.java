@@ -20,9 +20,9 @@ public class MastSubsystem extends Subsystem {
 	// here. Call these from Commands.
 	
 	Talon mastMotor = new Talon(3);
-	DigitalInput originSwitch = new DigitalInput(00000);
-	DigitalInput topSwitch = new DigitalInput(00000);
-	Encoder encoder = new Encoder(00000, 00000, false);
+	DigitalInput originSwitch = new DigitalInput(5);
+	DigitalInput topSwitch = new DigitalInput(4);
+	Encoder encoder = new Encoder(1, 2, false);
 	
 	public MastSubsystem() {
 		encoder.setDistancePerPulse(00000);

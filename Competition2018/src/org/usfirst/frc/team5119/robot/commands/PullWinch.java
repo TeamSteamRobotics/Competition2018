@@ -30,11 +30,11 @@ public class PullWinch extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.winchSubsystem.isDepressed()) {
+		/*if (Robot.winchSubsystem.isDepressed()) {
 			Robot.winchSubsystem.move(0);
-		} else {
+		} else {*/
 			Robot.winchSubsystem.move(1);
-		}
+		//}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
