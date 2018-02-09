@@ -21,7 +21,7 @@ public class VisionSubsystem extends Subsystem {
 	double[] yTable;
 	
 	
-	double[] defaultValue = {80};
+	double[] defaultValue = {320};
 
 	public VisionSubsystem() {
 		table = tables.getTable("GRIP/boxContours");
@@ -29,7 +29,6 @@ public class VisionSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	
     }
     public double getBoxX() {
     	updateArrays();
