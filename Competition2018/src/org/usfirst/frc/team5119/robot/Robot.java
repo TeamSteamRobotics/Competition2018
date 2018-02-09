@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5119.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,7 +30,10 @@ public class Robot extends TimedRobot {
 	public static final MastSubsystem mastSubsystem = new MastSubsystem();
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
+	public static VisionSubsystem visionSubsystem;
 	public static OI m_oi;
+	
+	CameraServer server;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,6 +44,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		server = CameraServer.getInstance();
+		server.startAutomaticCapture();
+		visionSubsystem = new VisionSubsystem();
 		m_oi = new OI();
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());

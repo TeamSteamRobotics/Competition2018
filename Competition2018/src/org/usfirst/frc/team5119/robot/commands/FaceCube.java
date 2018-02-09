@@ -3,15 +3,17 @@ package org.usfirst.frc.team5119.robot.commands;
 import org.usfirst.frc.team5119.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Drive extends Command {
+public class FaceCube extends Command {
 
-    public Drive() {
+    public FaceCube() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveSubsystem);
+        requires(Robot.visionSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +22,16 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.driveRobot(-Robot.m_oi.stick.getY(), Robot.m_oi.stick.getX());
+    	double correctionConstant = .75;
+    	double pegX;
+    	double xCorrectionSpeed;
+    	
+    	SmartDashboard.putNumber("horizontalCenter",  pegX = Robot.visionSubsystem.getBoxX());
+    	xCorrectionSpeed = correctionConstant*(pegX)/640;
+    	
+    	
+    	
+    	Robot.driveSubsystem.driveRobot(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
