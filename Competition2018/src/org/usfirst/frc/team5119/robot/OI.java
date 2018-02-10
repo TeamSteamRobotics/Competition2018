@@ -31,6 +31,6 @@ public class OI {
 		mast_down.whileHeld(new ManualMastDown());
 		winch_in.whileHeld(new PullWinch());
 		winch_out.whileHeld(new ReleaseWinch());
-		//faceCube.whileHeld(new FaceCube());
+		faceCube.whileHeld(new FaceCube());
 	} 
 }

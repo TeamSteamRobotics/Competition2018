@@ -30,7 +30,6 @@ public class FaceCube extends Command {
     	xCorrectionSpeed = correctionConstant*(pegX)/640;
     	
     	
-    	
     	Robot.driveSubsystem.driveRobot(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
     }
 
