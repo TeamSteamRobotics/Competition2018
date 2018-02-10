@@ -20,17 +20,21 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	
 	public Joystick stick = new Joystick(0);
+	
 	public Button mast_up = new JoystickButton(stick, 5);
 	public Button mast_down = new JoystickButton(stick, 3);
 	public Button winch_in = new JoystickButton(stick, 10);
 	public Button winch_out = new JoystickButton(stick, 12);
-	public Button faceCube = new JoystickButton(stick, 1);
+	public Button grabCube = new JoystickButton(stick, 1);
+	public Button releaseCube = new JoystickButton(stick, 2);
 	
 	public OI() {
+		
 		mast_up.whileHeld(new ManualMastUp());
 		mast_down.whileHeld(new ManualMastDown());
 		winch_in.whileHeld(new PullWinch());
 		winch_out.whileHeld(new ReleaseWinch());
-		faceCube.whileHeld(new FaceCube());
+		grabCube.whileHeld(new PickUpCube());
+		releaseCube.whileHeld(new DropCube());
 	} 
 }

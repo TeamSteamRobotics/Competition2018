@@ -30,7 +30,7 @@ public class DropCube extends Command {
 		if (Robot.gripperSubsystem.isFullOpen()) {
 			Robot.gripperSubsystem.move(0);
 		} else {
-			Robot.gripperSubsystem.move(-1);
+			Robot.gripperSubsystem.move(1);
 		}
 	}
 
