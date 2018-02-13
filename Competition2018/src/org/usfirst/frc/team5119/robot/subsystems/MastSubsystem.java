@@ -18,34 +18,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class MastSubsystem extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-	Talon mastMotor = new Talon(3);//RobotMap.mastMotor);
-	DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
-	DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
-	DigitalInput topSwitch = new DigitalInput(RobotMap.mastTop);
-	Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
-	
-	protected int numTrues=0;
-	
-	public double mastLevel=0;
+	//Motors
+		Talon mastMotor = new Talon(3);
+	//Sensors
+		DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
+		DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
+		DigitalInput topSwitch = new DigitalInput(RobotMap.mastTop);
+		Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
+	//False positive protection: raise to stop mast from stopping prematurely
+		protected int numTrues=0;
+	//WIP
+		public double mastLevel=0;
+		
 	public MastSubsystem() {
 	}
 	
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MaintainMastHeight());
 	}
 	
 	public void move(double speed) {
 		mastMotor.set(speed);
 	}
+	
 	public boolean isAtBottom() {
 		return !bottomSwitch.get();
 	}
+	
 	public boolean isAtOrigin() {
 		return originSwitch.get();
 	}
+	
 	public boolean isAtTop() {
 		if(topSwitch.get()) {
 			numTrues++;
@@ -54,9 +56,11 @@ public class MastSubsystem extends Subsystem {
 		}
 		return numTrues >= 10;
 	}
+	
 	public double getPosition() {
 		return encoder.get();
 	}
+	
 	public void setTargetLevel(double newTarget) {
 		mastLevel = newTarget;
 	}

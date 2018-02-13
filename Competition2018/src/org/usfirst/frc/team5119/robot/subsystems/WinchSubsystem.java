@@ -17,15 +17,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The subsystem that controls the winch.
  */
 public class WinchSubsystem extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-	Talon winchMotor = new Talon(RobotMap.winchMotor);
-	DigitalInput limitSwitch = new DigitalInput(RobotMap.winchlimit);
-	double speedModifier = 1;
+	//Motors
+		Talon winchMotor = new Talon(RobotMap.winchMotor);
+	//Sensors
+		DigitalInput limitSwitch = new DigitalInput(RobotMap.winchlimit);
+	//Speed Modifier: set to 1 for no speed cap
+		double speedModifier = 1;
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 	
 	public void move(double speed) {

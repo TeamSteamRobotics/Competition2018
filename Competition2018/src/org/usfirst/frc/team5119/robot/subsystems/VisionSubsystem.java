@@ -1,9 +1,6 @@
 package org.usfirst.frc.team5119.robot.subsystems;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,8 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class VisionSubsystem extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	
 	NetworkTableInstance tables = NetworkTableInstance.getDefault();
 	NetworkTable table;
 	double[] sizeTable;

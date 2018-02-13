@@ -17,19 +17,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class GripperSubsystem extends Subsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+	//Motors
+		Talon gripMotor = new Talon(RobotMap.gripperMotor);
 	
-	Talon gripMotor = new Talon(RobotMap.gripperMotor);
-	DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
-	DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
-	DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
+	//Sensors
+		DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
+		DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
+		DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
 	
-	double speedModifier = 1;
+	//Safety cap: set to 1 when in normal driving
+		double speedModifier = 1;
 	
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 	
 	public void move(double speed) {
