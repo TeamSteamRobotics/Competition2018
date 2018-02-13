@@ -8,6 +8,7 @@
 package org.usfirst.frc.team5119.robot.subsystems;
 
 import org.usfirst.frc.team5119.robot.RobotMap;
+import org.usfirst.frc.team5119.robot.commands.MaintainMastLevel;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,13 +28,12 @@ public class MastSubsystem extends Subsystem {
 		Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
 	//False positive protection: raise to stop mast from stopping prematurely
 		protected int numTrues=0;
-	//WIP
-		public double mastLevel=0;
 		
 	public MastSubsystem() {
 	}
 	
 	public void initDefaultCommand() {
+		setDefaultCommand(new MaintainMastLevel());
 	}
 	
 	public void move(double speed) {
@@ -59,10 +59,6 @@ public class MastSubsystem extends Subsystem {
 	
 	public double getPosition() {
 		return encoder.get();
-	}
-	
-	public void setTargetLevel(double newTarget) {
-		mastLevel = newTarget;
 	}
 
 }

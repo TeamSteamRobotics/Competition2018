@@ -8,20 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MaintainMastLevel extends Command {
+	protected double mastLevel;
+	protected double difference;
 
     public MaintainMastLevel() {
-        // Use requires() here to declare subsystem dependencies
         requires(Robot.mastSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	mastLevel = Robot.mastSubsystem.getPosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double targetValue = Robot.mastSubsystem.mastLevel;
-    	//double mast
+    	difference = mastLevel - Robot.mastSubsystem.getPosition();
+    	Robot.mastSubsystem.move(difference/2048);
     }
 
     // Make this return true when this Command no longer needs to run execute()
