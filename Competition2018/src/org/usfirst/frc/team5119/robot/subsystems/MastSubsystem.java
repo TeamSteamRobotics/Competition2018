@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5119.robot.subsystems;
 
+import org.usfirst.frc.team5119.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
@@ -20,9 +22,9 @@ public class MastSubsystem extends Subsystem {
 	// here. Call these from Commands.
 	
 	Talon mastMotor = new Talon(3);
-	DigitalInput originSwitch = new DigitalInput(5);
-	DigitalInput topSwitch = new DigitalInput(4);
-	Encoder encoder = new Encoder(1, 2, false);
+	DigitalInput originSwitch = new DigitalInput(RobotMap.mastBottomLimit);
+	DigitalInput topSwitch = new DigitalInput(RobotMap.mastTopLimit);
+	Encoder encoder = new Encoder(RobotMap.mastEncoder1, RobotMap.mastEncoder2, false);
 	
 	public MastSubsystem() {
 		encoder.setDistancePerPulse(00000);

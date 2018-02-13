@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5119.robot.subsystems;
 
+import org.usfirst.frc.team5119.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,9 +21,9 @@ public class GripperSubsystem extends Subsystem {
 	// here. Call these from Commands.
 	
 	Talon gripMotor = new Talon(2);
-	DigitalInput closedLimit = new DigitalInput(11);
-	DigitalInput openLimit = new DigitalInput(12);
-	DigitalInput boxGrabbedLimit = new DigitalInput(13);
+	DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosedLimit);
+	DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpenLimit);
+	DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBoxGrabbed);
 	double speedModifier = 1;
 	
 	public void initDefaultCommand() {

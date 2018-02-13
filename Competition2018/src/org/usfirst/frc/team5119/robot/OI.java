@@ -25,6 +25,7 @@ public class OI {
 	public Button winch_in = new JoystickButton(stick, 10);
 	public Button winch_out = new JoystickButton(stick, 12);
 	public Button faceCube = new JoystickButton(stick, 1);
+	public Button multiUseButton = new JoystickButton(stick, 8);
 	
 	public OI() {
 		mast_up.whileHeld(new ManualMastUp());
@@ -32,5 +33,7 @@ public class OI {
 		winch_in.whileHeld(new PullWinch());
 		winch_out.whileHeld(new ReleaseWinch());
 		faceCube.whileHeld(new FaceCube());
+		multiUseButton.whenPressed(new AutonomousTurn(90.0,1.0));
+		//multiUseButton.whenPressed(new Debug());
 	} 
 }

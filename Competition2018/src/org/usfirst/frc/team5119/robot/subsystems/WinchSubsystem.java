@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5119.robot.subsystems;
 
+import org.usfirst.frc.team5119.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,7 +21,7 @@ public class WinchSubsystem extends Subsystem {
 	// here. Call these from Commands.
 	
 	Talon winchMotor = new Talon(4);
-	DigitalInput limitSwitch = new DigitalInput(8);
+	DigitalInput limitSwitch = new DigitalInput(RobotMap.winchLimit);
 	double speedModifier = 1;
 
 	public void initDefaultCommand() {

@@ -24,13 +24,12 @@ import org.usfirst.frc.team5119.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final MastSubsystem mastSubsystem = new MastSubsystem();
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 	public static VisionSubsystem visionSubsystem;
+	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 	public static OI m_oi;
 	
 	CameraServer server;
@@ -48,7 +47,6 @@ public class Robot extends TimedRobot {
 		server.startAutomaticCapture();
 		visionSubsystem = new VisionSubsystem();
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}

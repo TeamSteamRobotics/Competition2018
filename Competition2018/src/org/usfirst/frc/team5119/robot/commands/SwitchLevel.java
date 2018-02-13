@@ -16,7 +16,7 @@ import org.usfirst.frc.team5119.robot.Robot;
 public class SwitchLevel extends Command {
 	public SwitchLevel() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kExampleSubsystem);
+		//requires(Robot.kExampleSubsystem);
 	}
 
 	// Called just before this Command runs the first time

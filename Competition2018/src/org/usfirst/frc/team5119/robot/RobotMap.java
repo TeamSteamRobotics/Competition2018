@@ -18,6 +18,16 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
+	public static int wheelEncoder1 = 0;
+	public static int wheelEncoder2 = 1;
+	public static int mastEncoder1 = 4;
+	public static int mastEncoder2 = 5;
+	public static int winchLimit = 8;
+	public static int gripperClosedLimit = 11;
+	public static int gripperOpenLimit = 12;
+	public static int gripperBoxGrabbed = 13;
+	public static int mastBottomLimit = 9;
+	public static int mastTopLimit = 10;
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

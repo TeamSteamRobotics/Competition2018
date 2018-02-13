@@ -1,10 +1,12 @@
 package org.usfirst.frc.team5119.robot.subsystems;
 
+import org.usfirst.frc.team5119.robot.RobotMap;
 import org.usfirst.frc.team5119.robot.commands.Drive;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,6 +22,9 @@ public class DriveSubsystem extends Subsystem {
 	protected static final WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
 	protected static final WPI_TalonSRX backRight = new WPI_TalonSRX(2);
 	protected static final WPI_TalonSRX backLeft = new WPI_TalonSRX(3);
+	public Encoder encoder = new Encoder(RobotMap.wheelEncoder1, RobotMap.wheelEncoder2, false);
+	//set to 1 when in normal driving
+	protected double safetySpeedModifier = 1;
 	
 	protected static SpeedControllerGroup rightMotors;
 	protected static SpeedControllerGroup leftMotors;
@@ -28,7 +33,7 @@ public class DriveSubsystem extends Subsystem {
 	
 	public DriveSubsystem() {
 		/* quadrature */
-		frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0); // PIDLoop=0, timeoutMs=0
+		//frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0); // PIDLoop=0, timeoutMs=0
 		//frontRight.setInverted(true);
 		//backRight.setInverted(true);
 		
@@ -40,6 +45,7 @@ public class DriveSubsystem extends Subsystem {
 		rightMotors = new SpeedControllerGroup(frontRight, backRight);
 		leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
 		drive = new DifferentialDrive(leftMotors, rightMotors);
+		
 
 	}
 	
@@ -49,12 +55,12 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void driveRobot(double fwd, double turn) {
-    	drive.arcadeDrive(fwd, turn, false);
+    	drive.arcadeDrive(fwd*safetySpeedModifier, turn*safetySpeedModifier, false);
     	
     }
     public int getEncoderCount() {
     	
-    	return frontRight.getSelectedSensorPosition(0);
+    	return encoder.get();
     	//return 5;
     	
     }
