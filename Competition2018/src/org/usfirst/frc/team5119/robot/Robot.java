@@ -119,6 +119,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("bottom", mastSubsystem.isAtBottom());
+		SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
+		SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
+		SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
 	}
 
 	/**

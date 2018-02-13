@@ -27,13 +27,15 @@ public class ManualMastUp extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.mastSubsystem.move(-.5);
+		if (true) {//!Robot.mastSubsystem.isAtTop()) {
+			Robot.mastSubsystem.move(-1);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return false;//Robot.mastSubsystem.isAtTop();
 	}
 
 	// Called once after isFinished returns true

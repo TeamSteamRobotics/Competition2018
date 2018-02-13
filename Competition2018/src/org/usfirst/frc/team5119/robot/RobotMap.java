@@ -14,6 +14,31 @@ package org.usfirst.frc.team5119.robot;
  * floating around.
  */
 public class RobotMap {
+	public static int
+	//sensors
+		//mast
+			mastTop = 12,
+			mastOrigin = 11,
+			mastBottom = 10,
+			mastEncA = 4,
+			mastEncB = 5,
+	
+	
+		//gripper
+			gripperBox = 9,
+			gripperClosed = 7,
+			gripperOpen = 8,
+	
+		//winch
+			winchlimit = 19,
+	//motors
+		//mast
+			mastMotor = 3,
+		//gripper
+			gripperMotor = 2,
+		//winch
+			winchMotor = 4;
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

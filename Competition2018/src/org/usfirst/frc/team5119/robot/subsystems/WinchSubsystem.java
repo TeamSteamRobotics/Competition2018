@@ -19,9 +19,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WinchSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	
-	Talon winchMotor = new Talon(4);
-	DigitalInput limitSwitch = new DigitalInput(RobotMap.winchLimit);
+	Talon winchMotor = new Talon(RobotMap.winchMotor);
+	DigitalInput limitSwitch = new DigitalInput(RobotMap.winchlimit);
 	double speedModifier = 1;
 
 	public void initDefaultCommand() {

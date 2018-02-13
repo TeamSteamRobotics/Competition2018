@@ -20,10 +20,11 @@ public class GripperSubsystem extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	Talon gripMotor = new Talon(2);
-	DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosedLimit);
-	DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpenLimit);
-	DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBoxGrabbed);
+	Talon gripMotor = new Talon(RobotMap.gripperMotor);
+	DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
+	DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
+	DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
+	
 	double speedModifier = 1;
 	
 	public void initDefaultCommand() {
@@ -36,14 +37,14 @@ public class GripperSubsystem extends Subsystem {
 	}
 	
 	public boolean isFullClosed() {
-		return closedLimit.get();
+		return !closedLimit.get();
 	}
 	
 	public boolean isFullOpen() {
-		return openLimit.get();
+		return !openLimit.get();
 	}
 	
 	public boolean isBoxGrabbed() {
-		return boxGrabbedLimit.get();
+		return !boxGrabbedLimit.get();
 	}
 }
