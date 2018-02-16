@@ -8,6 +8,7 @@
 package org.usfirst.frc.team5119.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,7 +31,11 @@ public class Robot extends TimedRobot {
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 	public static VisionSubsystem visionSubsystem;
 	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
+	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
 	public static OI m_oi;
+	
+	public static DriverStation driverStation = DriverStation.getInstance();
+	public static String switchPositions = "LLR";//driverStation.getGameSpecificMessage();
 	
 	CameraServer server;
 
@@ -49,6 +54,7 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
 	}
 
 	/**
@@ -64,6 +70,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
 	/**
@@ -80,6 +87,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
+		mastSubsystem.resetEncoder();
+		if(autoSwitchSubsystem.getPosition() == -1) {
+			m_autonomousCommand = null;//new LeftAutonomous();
+		}else if (autoSwitchSubsystem.getPosition() == 1) {
+			m_autonomousCommand = null;//new RightAutonomous();
+		}else {
+			m_autonomousCommand = new CenterAutonomous();
+		}
+		m_autonomousCommand = new CenterAutonomous();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -123,6 +139,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
 		SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
 		SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
+		SmartDashboard.putBoolean("gripperClosed", gripperSubsystem.isFullClosed());
+		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 	}
 
 	/**

@@ -23,7 +23,7 @@ public class MaintainMastLevel extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	difference = mastLevel - Robot.mastSubsystem.getPosition();
-    	Robot.mastSubsystem.move(difference/2048);
+    	Robot.mastSubsystem.move(difference/1024);
     }
 
     // Make this return true when this Command no longer needs to run execute()

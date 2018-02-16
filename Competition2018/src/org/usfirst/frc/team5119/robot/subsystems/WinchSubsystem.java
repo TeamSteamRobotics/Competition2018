@@ -19,19 +19,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WinchSubsystem extends Subsystem {
 	//Motors
 		Talon winchMotor = new Talon(RobotMap.winchMotor);
-	//Sensors
-		DigitalInput limitSwitch = new DigitalInput(RobotMap.winchlimit);
 	//Speed Modifier: set to 1 for no speed cap
 		double speedModifier = 1;
 
 	public void initDefaultCommand() {
+		
 	}
 	
 	public void move(double speed) {
 		winchMotor.set(speed*speedModifier);
-	}
-	
-	public boolean isDepressed() {
-		return limitSwitch.get();
 	}
 }

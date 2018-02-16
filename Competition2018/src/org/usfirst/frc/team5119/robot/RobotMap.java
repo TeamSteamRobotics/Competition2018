@@ -28,11 +28,15 @@ public class RobotMap {
 			gripperBox = 9,
 			gripperClosed = 7,
 			gripperOpen = 8,
+			gripperHook = 6,
 	
 		//winch
-			winchlimit = 19,
+			winchlimit = 2,
+		//auto switches
+			autoLeftSwitch = 0,
+			autoRightSwitch = 1,
 	//motors
-		//mast
+		//mast 10,11,18,19
 			mastMotor = 3,
 		//gripper
 			gripperMotor = 2,

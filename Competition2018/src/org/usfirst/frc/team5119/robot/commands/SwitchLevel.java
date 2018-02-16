@@ -8,13 +8,16 @@
 package org.usfirst.frc.team5119.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
+
 import org.usfirst.frc.team5119.robot.Robot;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class SwitchLevel extends Command {
+public class SwitchLevel extends TimedCommand {
 	public SwitchLevel() {
+		super(4);
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.kExampleSubsystem);
 	}
@@ -27,22 +30,25 @@ public class SwitchLevel extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.mastSubsystem.move(-1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return isTimedOut();//Robot.mastSubsystem.getPosition() - 1000 < 100;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.mastSubsystem.move(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.mastSubsystem.move(0);
 	}
 }

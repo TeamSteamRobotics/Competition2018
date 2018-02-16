@@ -13,6 +13,7 @@ public class GyroSubsystem extends Subsystem {
 		protected AHRS gyro = new AHRS(SPI.Port.kMXP);
 	
     public void initDefaultCommand() {
+    	
     }
     
     public double gyroAngle(){

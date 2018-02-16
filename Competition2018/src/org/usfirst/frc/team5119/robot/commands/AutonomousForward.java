@@ -3,22 +3,25 @@ package org.usfirst.frc.team5119.robot.commands;
 import org.usfirst.frc.team5119.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
+
 import java.lang.Math;
 /**
  *
  */
-public class AutonomousForward extends Command {
+public class AutonomousForward extends TimedCommand {
 	double speed;
 	boolean forward;
 	double encoderStart;
 	boolean isDone;
 	double r;
-	int rotationMultiplier = 2048;
+	int rotationMultiplier = 1;//2048;
 	double goalRotations;
 	double power;
 
-    public AutonomousForward(double _speed, double rotations) {
+    public AutonomousForward(double _speed, double rotations, double timeout) {
         // Use requires() here to declare subsystem dependencies
+    	super(timeout);
         requires(Robot.driveSubsystem);
         speed = _speed;
         r = rotations*rotationMultiplier;  
@@ -42,7 +45,7 @@ public class AutonomousForward extends Command {
     protected void execute() {
     	/*power = Math.min(.25, Math.max(-.25, (goalRotations - Robot.driveSubsystem.encoderOutput())/rotationMultiplier));
     	Robot.driveSubsystem.drive(power, 0);*/
-    	if(forward) {
+    	/*if(forward) {
     		if (goalRotations >= Robot.driveSubsystem.getEncoderCount()) {
     			Robot.driveSubsystem.driveRobot(speed, 0);
     		}else {
@@ -56,12 +59,13 @@ public class AutonomousForward extends Command {
     		//	Robot.driveSubsystem.drive(0, 0);
     			isDone = true;
     		}
-    	}
+    	}*/
+    	Robot.driveSubsystem.driveRobot(speed, r);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isDone;
+        return isTimedOut();//Done;
     }
 
     // Called once after isFinished returns true

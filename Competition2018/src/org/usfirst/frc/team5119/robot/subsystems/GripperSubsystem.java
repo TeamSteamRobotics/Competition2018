@@ -24,6 +24,7 @@ public class GripperSubsystem extends Subsystem {
 		DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
 		DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
 		DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
+		DigitalInput hookLimit = new DigitalInput(RobotMap.gripperHook);
 	
 	//Safety cap: set to 1 when in normal driving
 		double speedModifier = 1;
@@ -45,5 +46,8 @@ public class GripperSubsystem extends Subsystem {
 	
 	public boolean isBoxGrabbed() {
 		return !boxGrabbedLimit.get();
+	}
+	public boolean isHookReleased() {
+		return !hookLimit.get();
 	}
 }

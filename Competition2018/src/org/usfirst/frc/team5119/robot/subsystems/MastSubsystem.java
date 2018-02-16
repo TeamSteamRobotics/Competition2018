@@ -22,15 +22,12 @@ public class MastSubsystem extends Subsystem {
 	//Motors
 		Talon mastMotor = new Talon(3);
 	//Sensors
-		DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
-		DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
+		//DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
+		//DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
 		DigitalInput topSwitch = new DigitalInput(RobotMap.mastTop);
 		Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
 	//False positive protection: raise to stop mast from stopping prematurely
 		protected int numTrues=0;
-		
-	public MastSubsystem() {
-	}
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new MaintainMastLevel());
@@ -41,11 +38,11 @@ public class MastSubsystem extends Subsystem {
 	}
 	
 	public boolean isAtBottom() {
-		return !bottomSwitch.get();
+		return false;//!bottomSwitch.get();
 	}
 	
 	public boolean isAtOrigin() {
-		return originSwitch.get();
+		return false;//originSwitch.get();
 	}
 	
 	public boolean isAtTop() {
@@ -60,5 +57,7 @@ public class MastSubsystem extends Subsystem {
 	public double getPosition() {
 		return encoder.get();
 	}
-
+	public void resetEncoder() {
+		encoder.reset();
+	}
 }
