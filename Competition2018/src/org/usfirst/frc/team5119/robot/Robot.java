@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
+	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
 		mastSubsystem.resetEncoder();
-		if(autoSwitchSubsystem.getPosition() == -1) {
+		/*if(autoSwitchSubsystem.getPosition() == -1) {
 			m_autonomousCommand = null;//new LeftAutonomous();
 		}else if (autoSwitchSubsystem.getPosition() == 1) {
 			m_autonomousCommand = null;//new RightAutonomous();
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new CenterAutonomous();
 		}
 		m_autonomousCommand = new CenterAutonomous();
-
+*/
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -141,6 +141,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
 		SmartDashboard.putBoolean("gripperClosed", gripperSubsystem.isFullClosed());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
+		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
 	}
 
 	/**
