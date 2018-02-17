@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team5119.robot.autonomous.Strategy;
 import org.usfirst.frc.team5119.robot.commands.*;
 import org.usfirst.frc.team5119.robot.subsystems.*;
 
@@ -29,6 +31,7 @@ public class Robot extends TimedRobot {
 	public static final MastSubsystem mastSubsystem = new MastSubsystem();
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
+	public static final Strategy strategy = new Strategy();
 	public static VisionSubsystem visionSubsystem;
 	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
@@ -97,6 +100,7 @@ public class Robot extends TimedRobot {
 		}
 		m_autonomousCommand = new CenterAutonomous();
 */
+		 strategy.start();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
