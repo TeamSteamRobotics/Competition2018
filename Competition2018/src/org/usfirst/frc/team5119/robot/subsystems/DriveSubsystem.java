@@ -20,7 +20,8 @@ public class DriveSubsystem extends Subsystem {
 		protected static final WPI_TalonSRX backLeft = new WPI_TalonSRX(3);
 	
 	//Encoders
-		public Encoder encoder = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
+		public Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
+					  rightEncoder = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
 	
 	//Speed limit: set to 1 when in normal driving
 		protected double safetySpeedModifier = 1;
@@ -37,6 +38,9 @@ public class DriveSubsystem extends Subsystem {
 		backRight.configOpenloopRamp(.5, 1000);
 		backLeft.configOpenloopRamp(.5, 1000);
 		
+		leftEncoder.setDistancePerPulse(0.00048828125);
+		rightEncoder.setDistancePerPulse(0.00048828125);
+		
 		rightMotors = new SpeedControllerGroup(frontRight, backRight);
 		leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
 		drive = new DifferentialDrive(leftMotors, rightMotors);
@@ -50,7 +54,24 @@ public class DriveSubsystem extends Subsystem {
     	drive.arcadeDrive(fwd*safetySpeedModifier, turn*safetySpeedModifier, false);
     }
     
-    public int getEncoderCount() {
-    	return encoder.get();
+    public int getLeftEncoderCount() {
+    	return leftEncoder.get();
+    }
+    
+    public int getRightEncoderCount() {
+    	return rightEncoder.get();
+    }
+    
+    public double getLeftEncoderRotations() {
+    	return leftEncoder.getDistance();
+    }
+    
+    public double getRightEncoderRotations() {
+    	return rightEncoder.getDistance();
+    }
+    
+    public void resetEncoders() {
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     }
 }

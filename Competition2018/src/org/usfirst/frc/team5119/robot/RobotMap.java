@@ -44,8 +44,10 @@ public class RobotMap {
 			winchMotor = 4,
 	//drive
 		//sensors
-			rightDriveEncA = 0,
-			rightDriveEncB = 1;
+			leftDriveEncA = 0,
+			leftDriveEncB = 0,
+			rightDriveEncA = 2,
+			rightDriveEncB = 3;
 	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
