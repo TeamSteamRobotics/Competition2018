@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -15,49 +16,34 @@ import org.usfirst.frc.team5119.robot.Robot;
  */
 public class AutonomousStraight extends Command {
 	
-	int goalDifference;
-	boolean forwards;
-	int goalCount;
+	double targetRotations;
 	
-	double speed = 0.25;
-	
-	boolean isDone;
+	double speed;
+	double turnCorrection;
 	
 	//1 rotation 19 inches
-	public AutonomousStraight(int rotations, boolean forwards) {
-		this.forwards = forwards;
-		goalDifference = rotations * 2048;
+	public AutonomousStraight(double _rotations) {
+		targetRotations = _rotations;
 		requires(Robot.driveSubsystem);
 	}
 
 	@Override
 	protected void initialize() {
-		isDone = false;
-		
-		goalCount = goalDifference + Robot.driveSubsystem.getEncoderCount();
+		Robot.driveSubsystem.resetEncoders();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (forwards) {
-			if (goalCount > Robot.driveSubsystem.getEncoderCount())
-				Robot.driveSubsystem.driveRobot(speed, 0);
-			else
-				isDone = true;
-		}
-		else {
-			if (goalCount < Robot.driveSubsystem.getEncoderCount())
-				Robot.driveSubsystem.driveRobot(-speed, 0);
-			else
-				isDone = true;
-		}
+		speed = (targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/5;
+		turnCorrection = (Robot.driveSubsystem.getRightEncoderCount() - Robot.driveSubsystem.getLeftEncoderCount())/200;
+		Robot.driveSubsystem.driveRobot(speed, turnCorrection);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return isDone;
+		return speed < 0.1;
 	}
 
 	// Called once after isFinished returns true
@@ -73,3 +59,4 @@ public class AutonomousStraight extends Command {
 		Robot.driveSubsystem.driveRobot(0, 0);
 	}
 }
+
