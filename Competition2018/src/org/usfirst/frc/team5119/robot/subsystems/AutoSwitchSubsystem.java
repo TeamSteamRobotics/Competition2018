@@ -23,11 +23,11 @@ public class AutoSwitchSubsystem extends Subsystem {
     public int getPosition() {
     	//return analogPin.getVoltage();
     	if(leftPin.getVoltage()<.1) {
-    		return -1;
-    	}else if(rightPin.getVoltage()<.1) {
-    		return 1;
-    	}else {
     		return 0;
+    	}else if(rightPin.getVoltage()<.1) {
+    		return 2;
+    	}else {
+    		return 1;
     	}
     }
 }

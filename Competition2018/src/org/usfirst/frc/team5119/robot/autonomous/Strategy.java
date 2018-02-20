@@ -12,10 +12,10 @@ public class Strategy extends CommandGroup {
 	public static int position;
 	
 	public void init() {
-		if (Scale.scalePriority == true) 
-			scalePlan(Scale.getTurns(position), Scale.getDistances(position), Switch.getDirections(position), Switch.getTurnDirection(position));
+		if ((Scale.scalePriority == true) == true) 
+			scalePlan(Scale.getTurns(position), Scale.getDistances(position), Scale.getDirections(position), Scale.getTurnDirection(position));
 		else if (Switch.switchPriority == true) 
-			switchPlan(Switch.getTurns(position), Switch.getDistances(position), Switch.getDirections(position), Scale.getTurnDirection(position));
+			switchPlan(Switch.getTurns(position), Switch.getDistances(position), Switch.getDirections(position), Switch.getTurnDirection(position));
 		else dummyPlan();
 	}
 	
@@ -42,9 +42,5 @@ public class Strategy extends CommandGroup {
 	public static void dummyPlan() {
 		//driveforward
 		new AutonomousStraight(20, false);
-	}
-
-	public void initDefaultCommand() {
-	
 	}
 }

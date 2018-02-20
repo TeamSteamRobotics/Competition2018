@@ -19,7 +19,7 @@ public class AutonomousStraight extends Command {
 	boolean forwards;
 	int goalCount;
 	
-	int speed;
+	double speed = 0.25;
 	
 	boolean isDone;
 	

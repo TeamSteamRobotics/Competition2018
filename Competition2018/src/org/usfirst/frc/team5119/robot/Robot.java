@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team5119.robot.autonomous.AutonomousInit;
 import org.usfirst.frc.team5119.robot.autonomous.Strategy;
 import org.usfirst.frc.team5119.robot.commands.*;
 import org.usfirst.frc.team5119.robot.subsystems.*;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 	public static final Strategy strategy = new Strategy();
+	public static final AutonomousInit autonomousinit = new AutonomousInit();
 	public static VisionSubsystem visionSubsystem;
 	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
@@ -91,6 +93,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
 		mastSubsystem.resetEncoder();
+		
+		autonomousinit.init();
 		/*if(autoSwitchSubsystem.getPosition() == -1) {
 			m_autonomousCommand = null;//new LeftAutonomous();
 		}else if (autoSwitchSubsystem.getPosition() == 1) {
@@ -110,7 +114,7 @@ public class Robot extends TimedRobot {
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+			//m_autonomousCommand.start();
 		}
 	}
 
