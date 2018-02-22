@@ -5,6 +5,7 @@ import org.usfirst.frc.team5119.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,9 +23,11 @@ public class AutoSwitchSubsystem extends Subsystem {
     }
     public int getPosition() {
     	//return analogPin.getVoltage();
-    	if(leftPin.getVoltage()<.1) {
+    	SmartDashboard.putNumber("leftSwitch", leftPin.getVoltage());
+    	SmartDashboard.putNumber("rightSwitch", rightPin.getVoltage());
+    	if(leftPin.getVoltage()>2) {
     		return 0;
-    	}else if(rightPin.getVoltage()<.1) {
+    	}else if(rightPin.getVoltage()>2) {
     		return 2;
     	}else {
     		return 1;

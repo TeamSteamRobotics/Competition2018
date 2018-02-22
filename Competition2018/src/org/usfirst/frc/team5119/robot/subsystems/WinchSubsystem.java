@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class WinchSubsystem extends Subsystem {
 	//Motors
 		Talon winchMotor = new Talon(RobotMap.winchMotor);
+		
 	//Speed Modifier: set to 1 for no speed cap
 		double speedModifier = 1;
 
@@ -28,5 +29,6 @@ public class WinchSubsystem extends Subsystem {
 	
 	public void move(double speed) {
 		winchMotor.set(speed*speedModifier);
+		
 	}
 }

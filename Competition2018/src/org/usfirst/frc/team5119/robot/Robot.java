@@ -75,6 +75,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		gyroSubsystem.resetGyro();
+		mastSubsystem.resetEncoder();
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 

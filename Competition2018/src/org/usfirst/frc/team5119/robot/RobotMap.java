@@ -33,8 +33,8 @@ public class RobotMap {
 		//winch
 			winchlimit = 2,
 		//auto switches
-			autoLeftSwitch = 0,
-			autoRightSwitch = 1,
+			autoLeftSwitch = 1,
+			autoRightSwitch = 0,
 	//motors
 		//mast 10,11,18,19
 			mastMotor = 3,
@@ -42,10 +42,11 @@ public class RobotMap {
 			gripperMotor = 2,
 		//winch
 			winchMotor = 4,
+			
 	//drive
 		//sensors
 			leftDriveEncA = 0,
-			leftDriveEncB = 0,
+			leftDriveEncB = 1,
 			rightDriveEncA = 2,
 			rightDriveEncB = 3;
 	

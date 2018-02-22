@@ -35,15 +35,18 @@ public class AutonomousStraight extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		speed = (targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/5;
-		turnCorrection = (Robot.driveSubsystem.getRightEncoderCount() - Robot.driveSubsystem.getLeftEncoderCount())/200;
+		speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/5, -.5), .5);
+		if(targetRotations <= 1.0) {
+			speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/1, -.5), .5);
+		}
+		turnCorrection = (Robot.driveSubsystem.getRightEncoderCount() - Robot.driveSubsystem.getLeftEncoderCount())/400;
 		Robot.driveSubsystem.driveRobot(speed, turnCorrection);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return speed < 0.1;
+		return speed < 0.05;
 	}
 
 	// Called once after isFinished returns true

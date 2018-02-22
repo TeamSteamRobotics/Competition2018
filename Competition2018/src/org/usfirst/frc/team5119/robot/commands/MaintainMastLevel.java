@@ -12,7 +12,8 @@ public class MaintainMastLevel extends Command {
 	protected double difference;
 
     public MaintainMastLevel() {
-        requires(Robot.mastSubsystem);
+        requires(Robot.mastSubsystem);//scale: -1500
+        //top: -2200
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +24,7 @@ public class MaintainMastLevel extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	difference = mastLevel - Robot.mastSubsystem.getPosition();
-    	Robot.mastSubsystem.move(difference/1024);
+    	Robot.mastSubsystem.move(difference/500);
     }
 
     // Make this return true when this Command no longer needs to run execute()

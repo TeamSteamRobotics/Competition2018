@@ -32,6 +32,7 @@ public class OI {
 	public Button grabCube2 = new JoystickButton(stick, 9);
 	public Button releaseCube2 = new JoystickButton(stick, 10);
 	public Button releaseHook = new JoystickButton(stick, 4);
+	public Button test = new JoystickButton(stick, 6);
 	
 	public OI() {
 		
@@ -50,5 +51,6 @@ public class OI {
 		mast_down.whenReleased(new MaintainMastLevel());
 		mast_up2.whenReleased(new MaintainMastLevel());
 		mast_down2.whenReleased(new MaintainMastLevel());
+		test.whileHeld(new SwitchLevel());
 	} 
 }

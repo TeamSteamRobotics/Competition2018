@@ -2,57 +2,48 @@ package org.usfirst.frc.team5119.robot.autonomous.autoCommands;
 
 import org.usfirst.frc.team5119.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class AutonomousTurn extends Command {
+public class AutonomousTurn extends TimedCommand {
+double targetAngle;
 	
-	double goalDegree;
-	boolean direction;
-	
-	double speed;
-	
-	boolean isDone;
-	
-    public AutonomousTurn(double degrees, boolean direction) {
-        requires(Robot.driveSubsystem);
-        requires(Robot.gyroSubsystem);
-        speed = .25;
-        goalDegree = degrees;
-        direction = this.direction;
+    public AutonomousTurn(double timeout,double angle) {
+    	super(timeout);
+    	targetAngle = angle;
+    	// Use requires() here to declare subsystem dependencies
+    	requires(Robot.driveSubsystem);
+    	requires(Robot.gyroSubsystem);
+    	//requires(Robot.visionSubsystem);
+    	// TODO Auto-generated constructor stub
     }
+
+	
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	isDone = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(direction) {
-    		if (Robot.gyroSubsystem.gyroAngle() != goalDegree)
-    			Robot.driveSubsystem.driveRobot(0, speed);
-    		else {
-    			Robot.driveSubsystem.driveRobot(0, 0);
-    			isDone = true;
-    		}
+    	double correctionSpeed = Robot.gyroSubsystem.relativeAngle(targetAngle)/90;
+    	if(correctionSpeed<-.25){
+    		correctionSpeed=-.25;
+    	}else if(correctionSpeed>.25){
+    		correctionSpeed=.25;
     	}
-    	else {
-    		if(Robot.gyroSubsystem.gyroAngle() != goalDegree) 
-    			Robot.driveSubsystem.driveRobot(0, -speed);
-    		else {
-    			Robot.driveSubsystem.driveRobot(0, 0);
-    			isDone = true;
-    		}
     		
-    	}
+    	Robot.driveSubsystem.driveRobot(0, correctionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return isTimedOut()||Math.abs(Robot.gyroSubsystem.relativeAngle(targetAngle)) < 3;
+        //||(Robot.visionSubsystem.horizontalCenter()>300&&Robot.visionSubsystem.horizontalCenter()<340);
     }
 
     // Called once after isFinished returns true

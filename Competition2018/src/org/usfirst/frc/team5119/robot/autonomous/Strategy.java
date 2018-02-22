@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.usfirst.frc.team5119.robot.autonomous.autoCommands.*;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,10 +13,10 @@ public class Strategy extends CommandGroup {
 	public static int position;
 	
 	public void init() {
-		if ((Scale.scalePriority == true) == true) 
-			scalePlan(Scale.getTurns(position), Scale.getDistances(position), Scale.getDirections(position), Scale.getTurnDirection(position));
+		if (((Scale.scalePriority == true) == true) == true) 
+			scalePlan(Scale.getTurns(position), Scale.getDistances(position), Scale.getCommands(position));
 		else if (Switch.switchPriority == true) 
-			switchPlan(Switch.getTurns(position), Switch.getDistances(position), Switch.getDirections(position), Switch.getTurnDirection(position));
+			switchPlan(Switch.getTurns(position), Switch.getDistances(position), Switch.getCommands(position));
 		else dummyPlan();
 	}
 	
@@ -25,22 +26,24 @@ public class Strategy extends CommandGroup {
 	 *  @param forwards
 	 *  A list whose every index is a distance to travel
 	 */
-	public void switchPlan(List<Integer> turns, List<Integer> distance, List<Boolean> straightDirection, List<Boolean> turnDirection) {
+	public void switchPlan(List<Double> turns, List<Double> distance, List<Command> commands) {
 		for(int i= 0; i < turns.size(); i++) {
-			addSequential(new AutonomousTurn(turns.get(i), turnDirection.get(i)) );
-			addSequential(new AutonomousStraight(distance.get(i), straightDirection.get(i)));
+			addSequential(new AutonomousTurn(2, turns.get(i)));
+			addParallel(commands.get(i));
+			addSequential(new AutonomousStraight(distance.get(i)));
 		}
 	}
 	
-	public void scalePlan(List<Integer> turns, List<Integer> distance, List<Boolean> straightDirection, List<Boolean> turnDirection) {
+	public void scalePlan(List<Double> turns, List<Double> distance, List<Command> commands) {
 		for(int i= 0; i < turns.size(); i++) {
-			addSequential(new AutonomousTurn(turns.get(i), turnDirection.get(i)) );
-			addSequential(new AutonomousStraight(distance.get(i), straightDirection.get(i)));
+			addSequential(new AutonomousTurn(2, turns.get(i)) );
+			addParallel(commands.get(i));
+			addSequential(new AutonomousStraight(distance.get(i)));
 		}
 	}
 	
-	public static void dummyPlan() {
+	public void dummyPlan() {
 		//driveforward
-		new AutonomousStraight(20, false);
+		addSequential(new AutonomousStraight(20));
 	}
 }

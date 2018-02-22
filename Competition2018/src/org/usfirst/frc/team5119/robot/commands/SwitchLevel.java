@@ -16,10 +16,14 @@ import org.usfirst.frc.team5119.robot.Robot;
  * An example command.  You can replace me with your own command.
  */
 public class SwitchLevel extends TimedCommand {
+	protected double targetEncoder;
 	public SwitchLevel() {
-		super(4);
+		super(5);
+		targetEncoder = -1000;
+		//super(3);
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.kExampleSubsystem);
+		requires(Robot.mastSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -30,7 +34,8 @@ public class SwitchLevel extends TimedCommand {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.mastSubsystem.move(-1);
+		double difference = targetEncoder - Robot.mastSubsystem.getPosition();
+		Robot.mastSubsystem.move(difference/100);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -42,13 +47,15 @@ public class SwitchLevel extends TimedCommand {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.mastSubsystem.move(0);
+		MaintainMastLevel nextCommand = new MaintainMastLevel();
+		nextCommand.start();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.mastSubsystem.move(0);
+		MaintainMastLevel nextCommand = new MaintainMastLevel();
+		nextCommand.start();
 	}
 }
