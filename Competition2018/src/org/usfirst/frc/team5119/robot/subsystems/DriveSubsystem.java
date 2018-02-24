@@ -38,8 +38,8 @@ public class DriveSubsystem extends Subsystem {
 		backRight.configOpenloopRamp(.5, 1000);
 		backLeft.configOpenloopRamp(.5, 1000);
 		
-		leftEncoder.setDistancePerPulse(0.00048828125);
-		rightEncoder.setDistancePerPulse(0.00048828125);
+		leftEncoder.setDistancePerPulse(0.00048828125);// = 1/2048
+		rightEncoder.setDistancePerPulse(0.00048828125);// = 1/2048
 		
 		rightMotors = new SpeedControllerGroup(frontRight, backRight);
 		leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
@@ -54,11 +54,11 @@ public class DriveSubsystem extends Subsystem {
     	drive.arcadeDrive(fwd*safetySpeedModifier, turn*safetySpeedModifier, false);
     }
     
-    public int getLeftEncoderCount() {
+    public double getLeftEncoderCount() {
     	return leftEncoder.get();
     }
     
-    public int getRightEncoderCount() {
+    public double getRightEncoderCount() {
     	return rightEncoder.get();
     }
     

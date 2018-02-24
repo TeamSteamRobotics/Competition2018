@@ -18,11 +18,13 @@ public class GyroSubsystem extends Subsystem {
 	//protected Gyro gyro = new ADXRS450_Gyro();
 	protected AHRS gyro = new AHRS(SPI.Port.kMXP);
 	
+	public double targetAngle = 0;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     public double gyroAngle(){
+    	
     	double angle = gyro.getAngle()%360;
     	if(angle<0){
     		return angle+360;
@@ -49,6 +51,12 @@ public class GyroSubsystem extends Subsystem {
     		angle+=360;
     	}
     	return angle;
+    }
+    public double getForwardAcceleration() {
+    	return gyro.getRawAccelX();
+    }
+    public double getForwardVelocity() {
+    	return gyro.getVelocityX();
     }
 }
 

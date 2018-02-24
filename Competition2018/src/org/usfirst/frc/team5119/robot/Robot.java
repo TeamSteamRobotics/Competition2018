@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import org.usfirst.frc.team5119.robot.autonomous.AutonomousInit;
 import org.usfirst.frc.team5119.robot.autonomous.Strategy;
 import org.usfirst.frc.team5119.robot.commands.*;
@@ -42,6 +47,11 @@ public class Robot extends TimedRobot {
 	public static DriverStation driverStation = DriverStation.getInstance();
 	public static String switchPositions = "LLR";//driverStation.getGameSpecificMessage();
 	
+    public static Logger logger = Logger.getLogger("RobotLog");  
+    FileHandler fh;
+    
+    
+	
 	CameraServer server;
 
 	Command m_autonomousCommand;
@@ -53,6 +63,25 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		try {  
+
+	        // This block configure the logger with handler and formatter  
+			fh = new FileHandler("/home/lvuser/javaLog.log");  
+	        logger.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+
+	        // the following statement is used to log any messages  
+	        //logger.info("My first log");  
+
+	    } catch (SecurityException e) {  
+	        e.printStackTrace();  
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    }  
+
+	    logger.info("Hi How r u?");
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
 		visionSubsystem = new VisionSubsystem();
@@ -152,6 +181,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripperClosed", gripperSubsystem.isFullClosed());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
+		SmartDashboard.putNumber("fwdAccel", gyroSubsystem.getForwardVelocity());
 	}
 
 	/**

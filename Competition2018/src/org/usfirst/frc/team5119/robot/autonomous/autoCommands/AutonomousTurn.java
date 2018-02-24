@@ -5,6 +5,7 @@ import org.usfirst.frc.team5119.robot.Robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -26,6 +27,8 @@ double targetAngle;
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.logger.info("AutoTurn("+targetAngle+")");
+    	Robot.gyroSubsystem.targetAngle = targetAngle;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,6 +39,7 @@ double targetAngle;
     	}else if(correctionSpeed>.25){
     		correctionSpeed=.25;
     	}
+    	SmartDashboard.putNumber("fwdAccel", Robot.gyroSubsystem.getForwardAcceleration());
     		
     	Robot.driveSubsystem.driveRobot(0, correctionSpeed);
     }

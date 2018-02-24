@@ -16,7 +16,7 @@ public class Switch extends Subsystem {
 	static int allianceSide;
 	//left side for left side of switch
 	static List<Double> position0TurnsLeft = Arrays.asList(0.0, 90.0, 90.0);
-	static List<Double> position0ForwardsLeft = Arrays.asList(7.5, 3.0, 0.0);
+	static List<Double> position0ForwardsLeft = Arrays.asList(7.5, 3.0, -1.0);
 	static List<Boolean> position0DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position0TurnDirectionsLeft = Arrays.asList(true, true);
 	static List<Command> position0CommandsLeft = Arrays.asList(new SwitchLevel(), new DummyCommand(), new AutoDropCube());
