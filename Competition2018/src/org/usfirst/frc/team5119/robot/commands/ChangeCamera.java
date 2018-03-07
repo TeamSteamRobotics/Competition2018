@@ -2,34 +2,38 @@ package org.usfirst.frc.team5119.robot.commands;
 
 import org.usfirst.frc.team5119.robot.Robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Drive extends Command {
+public class ChangeCamera extends Command {
+	
+	UsbCamera cams[] = {Robot.cam0, Robot.cam1};
 
-    public Drive() {
+    public ChangeCamera() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveSubsystem);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	int currentCam = Integer.parseInt(Robot.server.getSource().getName());
+    	if (currentCam < cams.length - 1) {
+    		Robot.server.setSource(cams[currentCam+1]);
+    	} else {
+    		Robot.server.setSource(cams[0]);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.m_oi.stick.getMagnitude()>.1) {
-    		Robot.driveSubsystem.driveRobot(-Robot.m_oi.stick.getY(), Robot.m_oi.stick.getX());
-    	}else {
-    		Robot.driveSubsystem.driveRobot(0, 0);
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

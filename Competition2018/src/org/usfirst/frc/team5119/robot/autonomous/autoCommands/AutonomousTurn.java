@@ -29,24 +29,25 @@ double targetAngle;
     protected void initialize() {
     	Robot.logger.info("AutoTurn("+targetAngle+")");
     	Robot.gyroSubsystem.targetAngle = targetAngle;
+    	//setTimeout(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double correctionSpeed = Robot.gyroSubsystem.relativeAngle(targetAngle)/90;
-    	if(correctionSpeed<-.25){
-    		correctionSpeed=-.25;
-    	}else if(correctionSpeed>.25){
-    		correctionSpeed=.25;
+    	double correctionSpeed = Robot.gyroSubsystem.relativeAngle(targetAngle)/67.5;
+    	if(correctionSpeed<-.375){
+    		correctionSpeed=-.375;
+    	}else if(correctionSpeed>.375){
+    		correctionSpeed=.375;
     	}
     	SmartDashboard.putNumber("fwdAccel", Robot.gyroSubsystem.getForwardAcceleration());
-    		
+    	SmartDashboard.putBoolean("timedOut", isTimedOut());
     	Robot.driveSubsystem.driveRobot(0, correctionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut()||Math.abs(Robot.gyroSubsystem.relativeAngle(targetAngle)) < 3;
+        return isTimedOut()||Math.abs(Robot.gyroSubsystem.relativeAngle(targetAngle)) < 5;
         //||(Robot.visionSubsystem.horizontalCenter()>300&&Robot.visionSubsystem.horizontalCenter()<340);
     }
 

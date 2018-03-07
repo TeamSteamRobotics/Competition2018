@@ -16,6 +16,7 @@ import org.usfirst.frc.team5119.robot.Robot;
  * An example command.  You can replace me with your own command.
  */
 public class SwitchLevel extends TimedCommand {
+	static int source = 0;
 	protected double targetEncoder;
 	public SwitchLevel() {
 		super(5);
@@ -23,7 +24,7 @@ public class SwitchLevel extends TimedCommand {
 		//super(3);
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.kExampleSubsystem);
-		requires(Robot.mastSubsystem);
+		//requires(Robot.mastSubsystem);
 	}
 
 	// Called just before this Command runs the first time

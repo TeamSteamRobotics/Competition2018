@@ -16,17 +16,17 @@ public class Switch extends Subsystem {
 	static int allianceSide;
 	//left side for left side of switch
 	static List<Double> position0TurnsLeft = Arrays.asList(0.0, 90.0, 90.0);
-	static List<Double> position0ForwardsLeft = Arrays.asList(7.5, 3.0, -1.0);
+	static List<Double> position0ForwardsLeft = Arrays.asList(8.0, 3.0, 0.0);
 	static List<Boolean> position0DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position0TurnDirectionsLeft = Arrays.asList(true, true);
 	static List<Command> position0CommandsLeft = Arrays.asList(new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
 	//left side for right side of switch
-	static List<Double> position0TurnsRight = Arrays.asList(0.0, 90.0, 180.0, 180.0);
-	static List<Double> position0ForwardsRight = Arrays.asList(12.0, 9.75, 2.0, 0.0);
-	static List<Boolean> position0DirectionsRight = Arrays.asList(true, true);
+	static List<Double> position0TurnsRight = Arrays.asList(4.9, 92.0, 82.0, 180.0);
+	static List<Double> position0ForwardsRight = Arrays.asList(12.0, 12.375, -2.375, 2.0);
+	static List<Boolean> positio0DirectionsRight = Arrays.asList(true, true);
 	static List<Boolean> position0TurnDirectionsRight = Arrays.asList(true, true);
-	static List<Command> position0CommandsRight = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
+	static List<Command> position0CommandsRight = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube(), new DummyCommand(), new AutoDropCube());
 	
 	//middle for right side of switch
 	static List<Double> position1TurnsRight = Arrays.asList(0.0, 45.0, 0.0, 0.0);
@@ -43,15 +43,15 @@ public class Switch extends Subsystem {
 	static List<Command> position1CommandsLeft = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
 	//right for left side of switch
-	static List<Double> position2TurnsLeft = Arrays.asList(0.0, -90.0, 180.0, 180.0);
-	static List<Double> position2ForwardsLeft = Arrays.asList(11.0, 8.0, 2.0, 0.0);
+	static List<Double> position2TurnsLeft = Arrays.asList(4.9, -90.0, -82.0, -180.0);
+	static List<Double> position2ForwardsLeft = Arrays.asList(12.0, 12.375, -2.375, 2.0);
 	static List<Boolean> position2DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position2TurnDirectionsLeft = Arrays.asList(true, true);
-	static List<Command> position2CommandsLeft = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
+	static List<Command> position2CommandsLeft = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube(), new DummyCommand(), new AutoDropCube());
 	
 	//right for right side of switch
-	static List<Double> position2TurnsRight = Arrays.asList(0.0, -90.0, -90.0);
-	static List<Double> position2ForwardsRight = Arrays.asList(8.5, 3.0, 0.0);
+	static List<Double> position2TurnsRight = Arrays.asList(4.9, -90.0, -90.0);
+	static List<Double> position2ForwardsRight = Arrays.asList(8.0, 3.0, 0.0);
 	static List<Boolean> position2DirectionsRight = Arrays.asList(true, true);
 	static List<Boolean> position2TurnDirectionsRight = Arrays.asList(true, true);
 	static List<Command> position2CommandsRight = Arrays.asList(new SwitchLevel(), new DummyCommand(), new AutoDropCube());

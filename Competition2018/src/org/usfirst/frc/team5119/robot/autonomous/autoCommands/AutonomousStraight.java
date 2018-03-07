@@ -22,7 +22,7 @@ public class AutonomousStraight extends Command {
 	
 	double speed;
 	double turnCorrection;
-	boolean isDone = false;
+	boolean hasMoved = false;
 	double maxVelocity = 0;
 	
 	
@@ -44,20 +44,18 @@ public class AutonomousStraight extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/5, -.5), .5);
+		speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/7, -.7), .7);
 		if(targetRotations <= 1.0) {
-			speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/1, -.5), .5);
+			speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/1, -.7), .7);
 		}
 		//turnCorrection = (Robot.driveSubsystem.getRightEncoderCount() - Robot.driveSubsystem.getLeftEncoderCount())/1000;
 		SmartDashboard.putNumber("speed", speed);
 		SmartDashboard.putNumber("fwdAccel", Robot.gyroSubsystem.getForwardAcceleration());
-		
-		turnCorrection = Robot.gyroSubsystem.relativeAngle(Robot.gyroSubsystem.targetAngle)/90;
+
+		turnCorrection = Robot.gyroSubsystem.relativeAngle(Robot.gyroSubsystem.targetAngle)/67.5;
 		Robot.driveSubsystem.driveRobot(speed, turnCorrection);
-		if(targetRotations > 0) {
-			isDone = Robot.gyroSubsystem.getForwardAcceleration() > 1;
-		}else {
-			isDone = Robot.gyroSubsystem.getForwardAcceleration() < -1;
+		if(!Robot.driveSubsystem.isStopped()) {
+			hasMoved = true;
 		}
 		//Robot.logger.info("rightEncoder: "+Robot.driveSubsystem.getRightEncoderCount());
 		
@@ -66,7 +64,7 @@ public class AutonomousStraight extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(speed) < 0.05;// || isDone;
+		return Math.abs(speed) < 0.1 || (hasMoved && Robot.driveSubsystem.isStopped());// || isDone;
 	}
 
 	// Called once after isFinished returns true

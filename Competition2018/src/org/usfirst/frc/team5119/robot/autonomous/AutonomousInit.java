@@ -36,10 +36,10 @@ public class AutonomousInit {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		//closest switch to the alliance
-		Switch.init('R',true);//gameData.charAt(0), true);
+		Switch.init(gameData.charAt(0), true);//gameData.charAt(0), true);
 		
 		//the only scale
-		Scale.init('L',false);//gameData.charAt(1), false);
+		Scale.init(gameData.charAt(1), false);
 
 		//the movements based on if going for the switch or scale and position
 		Robot.strategy.init();

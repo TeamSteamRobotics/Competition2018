@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5119.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -52,7 +54,10 @@ public class Robot extends TimedRobot {
     
     
 	
-	CameraServer server;
+	public static VideoSink server;
+	public static UsbCamera cam0;
+	public static UsbCamera cam1;
+	public static UsbCamera cam2;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -82,8 +87,12 @@ public class Robot extends TimedRobot {
 	    }  
 
 	    logger.info("Hi How r u?");
-		server = CameraServer.getInstance();
-		server.startAutomaticCapture();
+		cam0 = CameraServer.getInstance().startAutomaticCapture("0",0);
+		cam1 = CameraServer.getInstance().startAutomaticCapture("1",1);
+//		cam2 = CameraServer.getInstance().startAutomaticCapture("2", 2);
+		
+		server = CameraServer.getInstance().getServer();
+		server.setSource(cam0);
 		visionSubsystem = new VisionSubsystem();
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -181,7 +190,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripperClosed", gripperSubsystem.isFullClosed());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("fwdAccel", gyroSubsystem.getForwardVelocity());
+		SmartDashboard.putNumber("gyro", gyroSubsystem.gyroAngle());
 	}
 
 	/**

@@ -74,4 +74,7 @@ public class DriveSubsystem extends Subsystem {
     	leftEncoder.reset();
     	rightEncoder.reset();
     }
+    public boolean isStopped() {
+    	return leftEncoder.getStopped() && rightEncoder.getStopped();
+    }
 }
