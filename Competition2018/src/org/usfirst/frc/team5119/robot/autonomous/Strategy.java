@@ -32,7 +32,7 @@ public class Strategy extends CommandGroup {
 	public void switchPlan(List<Double> turns, List<Double> distance, List<Command> commands) {
 		SmartDashboard.putString("plan", "switchPlan");
 		for(int i= 0; i < turns.size(); i++) {
-			addSequential(new AutonomousTurn(.5, turns.get(i)));
+			addSequential(new AutonomousTurn(1.0, turns.get(i)));
 			addParallel(commands.get(i));
 			addSequential(new AutonomousStraight(distance.get(i)));
 			

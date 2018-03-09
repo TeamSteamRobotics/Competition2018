@@ -29,7 +29,7 @@ double targetAngle;
     protected void initialize() {
     	Robot.logger.info("AutoTurn("+targetAngle+")");
     	Robot.gyroSubsystem.targetAngle = targetAngle;
-    	//setTimeout(2);
+    	setTimeout(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
