@@ -44,7 +44,7 @@ public class AutonomousStraight extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/7, -.7), .7);
+		speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/7, -1), 1);
 		if(targetRotations <= 1.0) {
 			speed = Math.min(Math.max((targetRotations - (Robot.driveSubsystem.getLeftEncoderRotations() + Robot.driveSubsystem.getRightEncoderRotations())/2)/1, -.7), .7);
 		}

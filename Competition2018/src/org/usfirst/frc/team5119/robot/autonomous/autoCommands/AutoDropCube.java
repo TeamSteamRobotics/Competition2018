@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
  */
 public class AutoDropCube extends TimedCommand {
 	public AutoDropCube() {
-		super(1);
+		super(0.25);
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.gripperSubsystem);
 	}
