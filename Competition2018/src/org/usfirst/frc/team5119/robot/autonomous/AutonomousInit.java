@@ -1,8 +1,6 @@
 package org.usfirst.frc.team5119.robot.autonomous;
 
 import org.usfirst.frc.team5119.robot.Robot;
-import org.usfirst.frc.team5119.robot.subsystems.AutoSwitchSubsystem;
-
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class AutonomousInit {
@@ -36,10 +34,10 @@ public class AutonomousInit {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		//closest switch to the alliance
-		Switch.init(gameData.charAt(0), true);//gameData.charAt(0), true);
+		Switch.init(gameData.charAt(0), true);
 		
 		//the only scale
-		Scale.init(gameData.charAt(1), false);
+		Scale.init(gameData.charAt(1), (Strategy.position == 0 && gameData.charAt(1) == 'L') || (Strategy.position == 2 && gameData.charAt(1) == 'R')); //sets scale to priority if it is on the same side as us
 
 		//the movements based on if going for the switch or scale and position
 		Robot.strategy.init();

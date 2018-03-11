@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -72,7 +73,7 @@ public class Robot extends TimedRobot {
 		try {  
 
 	        // This block configure the logger with handler and formatter  
-			fh = new FileHandler("/home/lvuser/javaLog.log");  
+			fh = new FileHandler("/home/lvuser/robotLog-"+LocalDateTime.now()+".log"); // THIS COULD BREAK. IF SO, GET RID OF LocalDateTime.now()
 	        logger.addHandler(fh);
 	        SimpleFormatter formatter = new SimpleFormatter();  
 	        fh.setFormatter(formatter);  

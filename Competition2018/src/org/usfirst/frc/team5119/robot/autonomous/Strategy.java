@@ -26,7 +26,7 @@ public class Strategy extends CommandGroup {
 	/** @param  turns
 	 *  A list whose every index is a turn angle
 	 *  
-	 *  @param forwards
+	 *  @param distance
 	 *  A list whose every index is a distance to travel
 	 */
 	public void switchPlan(List<Double> turns, List<Double> distance, List<Command> commands) {
@@ -37,9 +37,10 @@ public class Strategy extends CommandGroup {
 			addSequential(new AutonomousStraight(distance.get(i)));
 			
 		}
-		Robot.logger.info(turns+"");
-		Robot.logger.info(distance+"");
-		Robot.logger.info(commands+"");
+		Robot.logger.info("going for switch");
+		Robot.logger.info("turns: "+turns+"");
+		Robot.logger.info("straights: "+distance+"");
+		Robot.logger.info("commands: "+commands+"");
 	}
 	
 	public void scalePlan(List<Double> turns, List<Double> distance, List<Command> commands) {
@@ -49,10 +50,14 @@ public class Strategy extends CommandGroup {
 			addSequential(new AutonomousStraight(distance.get(i)));
 			addParallel(commands.get(i));
 		}
+		Robot.logger.info("going for scale");
+		Robot.logger.info("turns: "+turns+"");
+		Robot.logger.info("straights: "+distance+"");
+		Robot.logger.info("commands: "+commands+"");
 	}
 	
 	public void dummyPlan() {
-		//driveforward
+		//drive forward
 		SmartDashboard.putString("plan", "dummyPlan");
 		addSequential(new AutonomousStraight(20));
 	}

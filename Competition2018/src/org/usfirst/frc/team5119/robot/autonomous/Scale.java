@@ -15,42 +15,42 @@ public class Scale extends Subsystem {
 	static boolean scalePriority = false;
 	
 	static int allianceSide;
-	//left side for left side of scale
+	//left side for left side of scale TODO =================NEEDS TO BE WRITTEN=================
 	static List<Double> position0TurnsLeft = Arrays.asList(0.0, 90.0, 90.0);
 	static List<Double> position0ForwardsLeft = Arrays.asList(15.0, 1.0, -0.0);
 	static List<Boolean> position0DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position0TurnDirectionsLeft = Arrays.asList(true, true);
 	static List<Command> position0CommandsLeft = Arrays.asList(new DummyCommand(), new DummyCommand(), new DummyCommand());//SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
-	//left side for right side of switch
+	//left side for right side of scale TODO =================NEEDS TO BE WRITTEN=================
 	static List<Double> position0TurnsRight = Arrays.asList(0.0, 90.0, 180.0, 180.0);
 	static List<Double> position0ForwardsRight = Arrays.asList(12.0, 9.75, 2.0, 0.0);
 	static List<Boolean> position0DirectionsRight = Arrays.asList(true, true);
 	static List<Boolean> position0TurnDirectionsRight = Arrays.asList(true, true);
 	static List<Command> position0CommandsRight = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
-	//middle for right side of switch
+	//middle for right side of scale
 	static List<Double> position1TurnsRight = Arrays.asList(0.0, 45.0, 0.0, 0.0);
 	static List<Double> position1ForwardsRight = Arrays.asList(1.0, 4.0, 2.5, 0.0);
 	static List<Boolean> position1DirectionsRight = Arrays.asList(true, true);
 	static List<Boolean> position1TurnDirectionsRight = Arrays.asList(true, true);
 	static List<Command> position1CommandsRight = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
-	//middle for left side of switch
+	//middle for left side of scale
 	static List<Double> position1TurnsLeft = Arrays.asList(0.0, -45.0, 0.0, 0.0);
 	static List<Double> position1ForwardsLeft = Arrays.asList(1.0, 4.0, 2.5, 0.0);
 	static List<Boolean> position1DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position1TurnDirectionsLeft = Arrays.asList(true, true);
 	static List<Command> position1CommandsLeft = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
-	//right for left side of switch
+	//right for left side of scale TODO =================NEEDS TO BE WRITTEN=================
 	static List<Double> position2TurnsLeft = Arrays.asList(5.0, -90.0, 180.0, 180.0);
 	static List<Double> position2ForwardsLeft = Arrays.asList(11.5, 8.5, 2.0, 0.0);
 	static List<Boolean> position2DirectionsLeft = Arrays.asList(true, true);
 	static List<Boolean> position2TurnDirectionsLeft = Arrays.asList(true, true);
 	static List<Command> position2CommandsLeft = Arrays.asList(new DummyCommand(), new SwitchLevel(), new DummyCommand(), new AutoDropCube());
 	
-	//right for right side of switch
+	//right for right side of scale TODO =================NEEDS TO BE WRITTEN=================
 	static List<Double> position2TurnsRight = Arrays.asList(0.0, -90.0, -90.0);
 	static List<Double> position2ForwardsRight = Arrays.asList(8.0, 3.0, 0.0);
 	static List<Boolean> position2DirectionsRight = Arrays.asList(true, true);
@@ -106,7 +106,7 @@ public class Scale extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		
 	}
 
