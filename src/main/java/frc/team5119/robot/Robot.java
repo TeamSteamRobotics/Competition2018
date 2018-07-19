@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
 	public static String switchPositions = "LLR";//driverStation.getGameSpecificMessage();
 	
     public static Logger logger = Logger.getLogger("RobotLog");  
-    FileHandler fh;s
+    FileHandler fh;
     
     
 	

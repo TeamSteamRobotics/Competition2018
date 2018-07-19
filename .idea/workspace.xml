@@ -2,124 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="033fd253-9c7b-456f-8279-142801c432ce" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__edu_wpi_first_cscore_cscore_java_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__edu_wpi_first_ntcore_ntcore_java_4_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__edu_wpi_first_wpilibj_wpilibj_java_2018_3_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__edu_wpi_first_wpiutil_wpiutil_java_3_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__openrio_mirror_third_ctre_CTRE_phoenix_java_5_2_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__openrio_mirror_third_kauailabs_navx_java_3_0_346.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opencv_opencv_java_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Competition2018_main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Competition2018_test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Competition2018.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/GyroSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/CTRE_Phoenix.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/CTRLib.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/WPILib.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/cscore.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/navx_frc.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/ntcore.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/opencv.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/jars/wpiutil.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/OI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/Robot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/RobotMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/AutonomousInit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/Scale.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/Strategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/Switch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutoDropCube.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutonomousStraight.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutonomousTurn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ChangeCamera.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ClimbLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/Debug.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/Drive.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/DropCube.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/DummyCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/FaceCube.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/FloorLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/MaintainMastLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ManualMastDown.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ManualMastUp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/PickUpCube.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/PullWinch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ReleaseHook.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ReleaseWinch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/ScaleLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/commands/SwitchLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/AutoSwitchSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/DriveSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/GripperSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/GyroSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/MastSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/VisionSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/build/org/usfirst/frc/team5119/robot/subsystems/WinchSubsystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/dist/FRCUserProgram.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/OI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/Robot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/RobotMap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/AutonomousInit.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/Scale.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/Strategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/Switch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutoDropCube.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutonomousStraight.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/autoCommands/AutonomousTurn.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/autonomous/autoCommands/CenterAutonomous.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ChangeCamera.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ClimbLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/Debug.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/Drive.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/DropCube.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/DummyCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/FaceCube.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/FloorLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/MaintainMastLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ManualMastDown.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ManualMastUp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/PickUpCube.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/PullWinch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ReleaseHook.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ReleaseWinch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/ScaleLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/commands/SwitchLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/AutoSwitchSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/DriveSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/GripperSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/GyroSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/MastSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/VisionSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Competition2018/src/org/usfirst/frc/team5119/robot/subsystems/WinchSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RobotMap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/OI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/Robot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/AutonomousDrive.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/AutonomousTurn.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/ClimbRope.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/Drive.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/ExampleCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/ExtendForks.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/LiftForks.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/ScoreScale.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/commands/ScoreSwitch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/subsystems/DriveSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/subsystems/ExampleSubsystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team5119/robot/subsystems/autonomous/DriveSubsystem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -163,8 +47,11 @@
       <file leaf-file-name="Robot.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+            <state relative-caret-position="255">
+              <caret line="53" column="19" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -463,7 +350,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4594782890294" />
+        <entry key="$PROJECT_DIR$" value="4596127340442" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
         <entry key="$PROJECT_DIR$/build.gradle" value="794812474" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="2585518924" />
@@ -682,9 +569,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -722,10 +606,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -796,7 +686,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -806,26 +696,26 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32943678" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.32943678" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960917" />
+      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.32943678" />
       <window_info anchor="right" auto_hide="true" id="Gradle" order="3" weight="0.3296875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="7" />
     </layout>
   </component>
@@ -838,8 +728,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        <state relative-caret-position="901">
+          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -855,6 +748,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/frc/team5119/robot/subsystems/DriveSubsystem.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -863,15 +763,108 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/frc/team5119/robot/Robot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+        <state relative-caret-position="255">
+          <caret line="53" column="19" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Competition2018</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Gradle: edu.wpi.first.cscore:cscore-java:1.2.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
