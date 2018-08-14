@@ -1,5 +1,6 @@
 package frc.team5119.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team5119.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,8 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReleaseHook extends Command {
 
     public ReleaseHook() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.gripperSubsystem);
     }
 
     // Called just before this Command runs the first time

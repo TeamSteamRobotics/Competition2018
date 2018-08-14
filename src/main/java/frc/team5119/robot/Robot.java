@@ -188,7 +188,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
 		SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
 		SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
-		SmartDashboard.putBoolean("gripperClosed", gripperSubsystem.isFullClosed());
+		SmartDashboard.putBoolean("gripper full closed", gripperSubsystem.isFullClosed());
+		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
 		SmartDashboard.putNumber("gyro", gyroSubsystem.gyroAngle());

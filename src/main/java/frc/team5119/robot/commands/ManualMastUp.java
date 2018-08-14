@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.team5119.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * This makes the mast go up.
  */
 public class ManualMastUp extends Command {
 	public ManualMastUp() {

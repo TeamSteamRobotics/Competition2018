@@ -32,7 +32,7 @@ public class MastSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new MaintainMastLevel());
 	}
-	
+
 	public void move(double speed) {
 		mastMotor.set(speed);
 	}
