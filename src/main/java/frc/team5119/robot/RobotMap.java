@@ -49,13 +49,16 @@ public class RobotMap {
 			leftDriveEncB = 1,
 			rightDriveEncA = 2,
 			rightDriveEncB = 3;
-	
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+	public static double
+	//constants
+		//chassis
+            k_wheelbase = 0.7,
+            k_wheelRadius = 0.15,
+	    //pathfinder PID tuning
+            kp = 0.9,
+            ki = 0.0,
+            kd = 0.0,
+            kv = 1/8, //this is 1 over max velocity
+            ka = 0.0;
+
 }

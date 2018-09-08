@@ -14,21 +14,21 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class DriveSubsystem extends Subsystem {
 	
 	//Talons
-		protected static final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
-		protected static final WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
-		protected static final WPI_TalonSRX backRight = new WPI_TalonSRX(2);
-		protected static final WPI_TalonSRX backLeft = new WPI_TalonSRX(3);
+		protected final WPI_TalonSRX frontRight = new WPI_TalonSRX(0);
+		protected final WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
+		protected final WPI_TalonSRX backRight = new WPI_TalonSRX(2);
+		protected final WPI_TalonSRX backLeft = new WPI_TalonSRX(3);
 	
 	//Encoders
-		public Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
+		protected Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
 					  rightEncoder = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
 	
 	//Speed limit: set to 1 when in normal driving
 		protected double safetySpeedModifier = 1;
 	
 	//Drive Train
-		protected static SpeedControllerGroup rightMotors;
-		protected static SpeedControllerGroup leftMotors;
+		protected SpeedControllerGroup rightMotors;
+		protected SpeedControllerGroup leftMotors;
 	
 		protected static DifferentialDrive drive;
 	
@@ -53,12 +53,16 @@ public class DriveSubsystem extends Subsystem {
     public void driveRobot(double fwd, double turn) {
     	drive.arcadeDrive(fwd*safetySpeedModifier, turn*safetySpeedModifier, false);
     }
-    
-    public double getLeftEncoderCount() {
-    	return leftEncoder.get();
+
+    public void tankDrive(double left, double right) {
+	    drive.tankDrive(left, right);
     }
     
-    public double getRightEncoderCount() {
+    public int getLeftEncoder() {
+    	return leftEncoder.get();
+    }
+
+    public int getRightEncoder() {
     	return rightEncoder.get();
     }
     

@@ -9,13 +9,15 @@ package frc.team5119.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import frc.team5119.robot.autonomous.Follower;
+import frc.team5119.robot.autonomous.TrajectoryGenerator;
+import jaci.pathfinder.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -52,9 +54,11 @@ public class Robot extends TimedRobot {
 	
     public static Logger logger = Logger.getLogger("RobotLog");  
     FileHandler fh;
-    
-    
-	
+
+
+    TrajectoryGenerator trajectoryGenerator;
+    Follower autoFollower;
+
 	public static VideoSink server;
 	public static UsbCamera cam0;
 	public static UsbCamera cam1;
@@ -98,7 +102,9 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
+
+        //trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
+
 	}
 
 	/**
@@ -108,7 +114,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+	    DriverStation.reportWarning("disabledInit!", false);
+        trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
+        DriverStation.reportWarning("generation finished!", false);
 	}
 
 	@Override
@@ -116,6 +124,9 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		gyroSubsystem.resetGyro();
 		mastSubsystem.resetEncoder();
+		if (autoSwitchSubsystem.hasChanged()) {
+		     trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
+        }
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
@@ -132,31 +143,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
 		mastSubsystem.resetEncoder();
-		
-		autonomousinit.init();
-		/*if(autoSwitchSubsystem.getPosition() == -1) {
-			m_autonomousCommand = null;//new LeftAutonomous();
-		}else if (autoSwitchSubsystem.getPosition() == 1) {
-			m_autonomousCommand = null;//new RightAutonomous();
-		}else {
-			m_autonomousCommand = new CenterAutonomous();
-		}
-		m_autonomousCommand = new CenterAutonomous();
-*/
-		 strategy.start();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			//m_autonomousCommand.start();
-		}
+		if (DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
+            autoFollower = new Follower(trajectoryGenerator.getLeft(), driveSubsystem);
+        } else {
+            autoFollower = new Follower(trajectoryGenerator.getRight(), driveSubsystem);
+        }
 	}
 
 	/**
@@ -165,6 +158,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		autoFollower.calcAndDrive();
 	}
 
 	@Override
