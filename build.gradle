@@ -21,6 +21,12 @@ deploy {
             // Debug can be overridden by command line, for use with VSCode
             debug = getDebugOrDefault(false)
         }
+
+        artifact('paths', jaci.gradle.deploy.artifact.FileCollectionArtifact) {
+            files = fileTree(dir: "src/main/resources/paths/")
+            directory = "/home/lvuser/paths/"
+            targets << "roborio"
+        }
     }
 }
 
