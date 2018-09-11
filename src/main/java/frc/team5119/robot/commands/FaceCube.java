@@ -30,7 +30,7 @@ public class FaceCube extends Command {
     	xCorrectionSpeed = correctionConstant*(pegX)/640;
     	
     	
-    	Robot.driveSubsystem.driveRobot(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
+    	Robot.driveSubsystem.arcadeDrive(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

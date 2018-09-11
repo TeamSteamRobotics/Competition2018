@@ -42,7 +42,7 @@ double targetAngle;
     	}
     	SmartDashboard.putNumber("fwdAccel", Robot.gyroSubsystem.getForwardAcceleration());
     	SmartDashboard.putBoolean("timedOut", isTimedOut());
-    	Robot.driveSubsystem.driveRobot(0, correctionSpeed);
+    	Robot.driveSubsystem.arcadeDrive(0, correctionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -53,12 +53,12 @@ double targetAngle;
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveSubsystem.driveRobot(0, 0);
+    	Robot.driveSubsystem.arcadeDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.driveSubsystem.driveRobot(0, 0);
+    	Robot.driveSubsystem.arcadeDrive(0, 0);
     }
 }

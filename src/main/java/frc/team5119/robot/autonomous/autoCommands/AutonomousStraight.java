@@ -53,7 +53,7 @@ public class AutonomousStraight extends Command {
 		SmartDashboard.putNumber("fwdAccel", Robot.gyroSubsystem.getForwardAcceleration());
 
 		turnCorrection = Robot.gyroSubsystem.relativeAngle(Robot.gyroSubsystem.targetAngle)/67.5;
-		Robot.driveSubsystem.driveRobot(speed, turnCorrection);
+		Robot.driveSubsystem.arcadeDrive(speed, turnCorrection);
 		if(!Robot.driveSubsystem.isStopped()) {
 			hasMoved = true;
 		}
@@ -70,14 +70,14 @@ public class AutonomousStraight extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveSubsystem.driveRobot(0, 0);
+		Robot.driveSubsystem.arcadeDrive(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.driveSubsystem.driveRobot(0, 0);
+		Robot.driveSubsystem.arcadeDrive(0, 0);
 	}
 }
 
