@@ -15,20 +15,23 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.team5119.robot.autonomous.Follower;
-import frc.team5119.robot.autonomous.TrajectoryGenerator;
-import jaci.pathfinder.*;
+import frc.team5119.robot.autonomous.PathfinderFollower;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import frc.team5119.robot.autonomous.AutonomousInit;
 import frc.team5119.robot.autonomous.Strategy;
-import frc.team5119.robot.commands.*;
 import frc.team5119.robot.subsystems.*;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -56,8 +59,8 @@ public class Robot extends TimedRobot {
     FileHandler fh;
 
 
-    TrajectoryGenerator trajectoryGenerator;
-    Follower autoFollower;
+    HashMap<String, Trajectory[]> trajectories;
+    PathfinderFollower autoFollower;
 
 	public static VideoSink server;
 	public static UsbCamera cam0;
@@ -115,7 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 	    DriverStation.reportWarning("disabledInit!", false);
-        trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
+        trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
         DriverStation.reportWarning("generation finished!", false);
 	}
 
@@ -124,9 +127,6 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		gyroSubsystem.resetGyro();
 		mastSubsystem.resetEncoder();
-		if (autoSwitchSubsystem.hasChanged()) {
-		     trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
-        }
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
@@ -146,9 +146,9 @@ public class Robot extends TimedRobot {
 		mastSubsystem.resetEncoder();
 
 		if (DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
-            autoFollower = new Follower(trajectoryGenerator.getLeft(), driveSubsystem);
+            autoFollower = new PathfinderFollower(trajectories.get("test-1"), driveSubsystem);
         } else {
-            autoFollower = new Follower(trajectoryGenerator.getRight(), driveSubsystem);
+            autoFollower = new PathfinderFollower(trajectories.get("test-2"), driveSubsystem);
         }
 	}
 
@@ -195,4 +195,46 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
+
+	// huge thanks to 3863 Pantherbotics for saying "just use our csv code"
+    public HashMap<String, Trajectory[]> getTrajectoriesfromDirectory(String dir) {
+	    HashMap<String, Trajectory[]> paths = new HashMap<>();
+	    ArrayList<File> filesInFolder;
+
+	    filesInFolder = listf(dir);
+	    for ( int i = filesInFolder.size() - 1; i >= 0; i--) {
+	        if (filesInFolder.get(i).getName().contains("_source_Jaci.csv")) {
+	            filesInFolder.remove(i);
+            }
+        }
+
+        for ( File traj : filesInFolder ) {
+            System.out.println(traj.getName());
+            paths.put(traj.getName().replace("_source_Jaci.csv", ""), new Trajectory[]{
+                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_left_"))),
+                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_right_"))),
+                    Pathfinder.readFromCSV(traj)});
+        }
+
+        return paths;
+    }
+
+    public ArrayList<File> listf(String directoryName) {
+        File directory = new File(directoryName);
+
+        ArrayList<File> resultList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] fList = directory.listFiles();
+        resultList.addAll(Arrays.asList(fList));
+        for (File file : fList) {
+            if (file.isFile()) {
+                System.out.println(file.getAbsolutePath());
+            } else if (file.isDirectory()) {
+                resultList.addAll(listf(file.getAbsolutePath()));
+            }
+        }
+        return resultList;
+    }
 }

@@ -1,7 +1,7 @@
 package frc.team5119.robot.autonomous;
 
-import frc.team5119.robot.RobotMap;
-import frc.team5119.robot.subsystems.DriveSubsystem;
+import frc.team5119.robot.Constants;
+import frc.team5119.interfaces.subsystems.DriveSubsystem;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
 
@@ -9,7 +9,7 @@ import jaci.pathfinder.followers.EncoderFollower;
  * This class handles following of pathfinder-generated paths
  * TODO switch to ramsete
  */
-public class Follower {
+public class PathfinderFollower {
 
     Trajectory trajectoryLeft;
     Trajectory trajectoryRight;
@@ -21,14 +21,14 @@ public class Follower {
      * @param trajectories trajectories[0] is the path for the left wheels, trajectories[1] is the path for the right wheels
      * @param driveSubsystem the driveSubsystem of the bot
      */
-    public Follower(Trajectory[] trajectories, DriveSubsystem driveSubsystem) {
+    public PathfinderFollower(Trajectory[] trajectories, DriveSubsystem driveSubsystem) {
         trajectoryLeft = trajectories[0];
         trajectoryRight = trajectories[1];
         subsystem = driveSubsystem;
         followerLeft = new EncoderFollower(trajectoryLeft);
         followerRight = new EncoderFollower(trajectoryRight);
-        followerLeft.configurePIDVA(RobotMap.kp, RobotMap.ki, RobotMap.kd, RobotMap.kv, RobotMap.ka);
-        followerRight.configurePIDVA(RobotMap.kp, RobotMap.ki, RobotMap.kd, RobotMap.kv, RobotMap.ka);
+        followerLeft.configurePIDVA(Constants.kp, Constants.ki, Constants.kd, Constants.kv, Constants.ka);
+        followerRight.configurePIDVA(Constants.kp, Constants.ki, Constants.kd, Constants.kv, Constants.ka);
     }
 
     /**

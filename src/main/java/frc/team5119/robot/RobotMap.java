@@ -49,16 +49,5 @@ public class RobotMap {
 			leftDriveEncB = 1,
 			rightDriveEncA = 2,
 			rightDriveEncB = 3;
-	public static double
-	//constants
-		//chassis
-            k_wheelbase = 0.7,
-            k_wheelRadius = 0.15,
-	    //pathfinder PID tuning
-            kp = 0.9,
-            ki = 0.0,
-            kd = 0.0,
-            kv = 1/8, //this is 1 over max velocity
-            ka = 0.0;
 
 }

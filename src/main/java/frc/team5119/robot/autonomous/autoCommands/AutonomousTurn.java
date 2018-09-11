@@ -2,8 +2,6 @@ package frc.team5119.robot.autonomous.autoCommands;
 
 import frc.team5119.robot.Robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
