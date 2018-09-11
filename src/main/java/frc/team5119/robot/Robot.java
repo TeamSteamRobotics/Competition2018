@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
 	public static final Strategy strategy = new Strategy();
 	public static final AutonomousInit autonomousinit = new AutonomousInit();
 	public static VisionSubsystem visionSubsystem;
-	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
 	public static OI m_oi;
 	
@@ -125,7 +124,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		gyroSubsystem.resetGyro();
+		driveSubsystem.resetGyro();
 		mastSubsystem.resetEncoder();
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
@@ -186,7 +185,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", gyroSubsystem.gyroAngle());
+		SmartDashboard.putNumber("gyro", driveSubsystem.getGyroAngle());
 	}
 
 	/**

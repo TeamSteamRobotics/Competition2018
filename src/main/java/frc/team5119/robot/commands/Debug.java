@@ -13,13 +13,12 @@ public class Debug extends Command {
     public Debug() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveSubsystem);
-        requires(Robot.gyroSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	//SmartDashboard.putNumber("encoder", Robot.driveSubsystem.getEncoderCount());
-    	SmartDashboard.putNumber("gyro", Robot.gyroSubsystem.gyroAngle());
+    	SmartDashboard.putNumber("gyro", Robot.driveSubsystem.getGyroAngle());
     }
 
     // Called repeatedly when this Command is scheduled to run

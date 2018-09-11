@@ -1,5 +1,7 @@
 package frc.team5119.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import frc.team5119.robot.RobotMap;
 import frc.team5119.robot.commands.Drive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -7,6 +9,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import jaci.pathfinder.Pathfinder;
 
 /**
  *
@@ -31,8 +34,12 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
 	protected SpeedControllerGroup
             rightMotors = new SpeedControllerGroup(frontRight, backRight),
             leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
-	
 	protected DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
+
+	protected AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+	@Deprecated
+	public double targetAngle = 0;
 	
 	public DriveSubsystem() {
 		frontRight.configOpenloopRamp(.5, 1000);
@@ -47,7 +54,9 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
     public void initDefaultCommand() {
         setDefaultCommand(new Drive());
     }
-    
+
+    // DRIVING
+
     public void arcadeDrive(double fwd, double turn) {
     	drive.arcadeDrive(fwd * safetySpeedModifier, turn * safetySpeedModifier, false);
     }
@@ -55,7 +64,9 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
     public void tankDrive(double left, double right) {
 	    drive.tankDrive(left, right, false);
     }
-    
+
+    // ENCODERS
+
     public int getLeftEncoder() {
     	return leftEncoder.get();
     }
@@ -79,5 +90,31 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
 
     public boolean isStopped() {
     	return leftEncoder.getStopped() && rightEncoder.getStopped();
+    }
+
+    // GYRO
+
+    /**
+     * @return gyro angle <b>in degrees</b>
+     */
+    public double getGyroAngle() {
+	    return gyro.getAngle() % 360;
+    }
+
+    /**
+     * @return gyro angle <b>in radians</b>
+     */
+    public double getGyroAngleRadians() {
+        return ( gyro.getAngle() * 0.01745329251 ) % 6.28318530718;
+    }
+
+    public void resetGyro() {
+        gyro.reset();
+    }
+
+    @Deprecated
+    public double relativeAngle(double reference) {
+        double angle = reference - getGyroAngle();
+        return Pathfinder.boundHalfDegrees(angle);
     }
 }
