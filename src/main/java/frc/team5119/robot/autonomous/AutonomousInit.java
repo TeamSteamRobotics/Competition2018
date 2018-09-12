@@ -28,7 +28,7 @@ public class AutonomousInit {
 	public void init() {
 		
 		//position = autonomousSwitchPosition
-		Strategy.position = Robot.autoSwitchSubsystem.getPosition();
+		//Strategy.position = Robot.autoSwitchSubsystem.getPosition();
 		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -37,9 +37,9 @@ public class AutonomousInit {
 		Switch.init(gameData.charAt(0), true);
 		
 		//the only scale
-		Scale.init(gameData.charAt(1), (Strategy.position == 0 && gameData.charAt(1) == 'L') || (Strategy.position == 2 && gameData.charAt(1) == 'R')); //sets scale to priority if it is on the same side as us
+		//Scale.init(gameData.charAt(1), (Strategy.position == 0 && gameData.charAt(1) == 'L') || (Strategy.position == 2 && gameData.charAt(1) == 'R')); //sets scale to priority if it is on the same side as us
 
 		//the movements based on if going for the switch or scale and position
-		Robot.strategy.init();
+		//Robot.strategy.init();
 	}
 }

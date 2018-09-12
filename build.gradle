@@ -1,6 +1,7 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2018.06.21"
+    id "maven"
+    id "edu.wpi.first.GradleRIO" version "2019.0.0-alpha-3"
 }
 
 def ROBOT_CLASS = "frc.team5119.robot.Robot"
@@ -20,6 +21,12 @@ deploy {
             // Debug can be overridden by command line, for use with VSCode
             debug = getDebugOrDefault(false)
         }
+
+        artifact('paths', jaci.gradle.deploy.artifact.FileCollectionArtifact) {
+            files = fileTree(dir: "src/main/resources/paths/")
+            directory = "/home/lvuser/paths/"
+            targets << "roborio"
+        }
     }
 }
 
@@ -30,8 +37,19 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
+    compile 'frc.team5119.interfaces:5119-interfaces:0.1.2-SNAPSHOT'
 }
 
+
+repositories {
+    maven {
+        credentials {
+            username 'guest'
+            password 'guest'
+        }
+        url "https://amrelk.com"
+    }
+}
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
@@ -40,6 +58,6 @@ jar {
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.8'
+wrapper {
+    gradleVersion = '4.9'
 }

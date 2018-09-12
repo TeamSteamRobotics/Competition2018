@@ -9,24 +9,29 @@ package frc.team5119.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.team5119.robot.autonomous.PathfinderFollower;
+
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import frc.team5119.robot.autonomous.AutonomousInit;
 import frc.team5119.robot.autonomous.Strategy;
-import frc.team5119.robot.commands.*;
 import frc.team5119.robot.subsystems.*;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,7 +48,6 @@ public class Robot extends TimedRobot {
 	public static final Strategy strategy = new Strategy();
 	public static final AutonomousInit autonomousinit = new AutonomousInit();
 	public static VisionSubsystem visionSubsystem;
-	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
 	public static OI m_oi;
 	
@@ -52,16 +56,18 @@ public class Robot extends TimedRobot {
 	
     public static Logger logger = Logger.getLogger("RobotLog");  
     FileHandler fh;
-    
-    
-	
+
+
+    HashMap<String, Trajectory[]> trajectories;
+    PathfinderFollower autoFollower;
+
 	public static VideoSink server;
 	public static UsbCamera cam0;
 	public static UsbCamera cam1;
 	public static UsbCamera cam2;
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -81,11 +87,9 @@ public class Robot extends TimedRobot {
 	        // the following statement is used to log any messages  
 	        //logger.info("My first log");  
 
-	    } catch (SecurityException e) {  
+	    } catch (Exception e) {
 	        e.printStackTrace();  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
+	    }
 
 	    logger.info("Hi How r u?");
 		cam0 = CameraServer.getInstance().startAutomaticCapture("0",0);
@@ -95,10 +99,18 @@ public class Robot extends TimedRobot {
 		server = CameraServer.getInstance().getServer();
 		server.setSource(cam0);
 		visionSubsystem = new VisionSubsystem();
-		m_oi = new OI();
-		// chooser.addObject("My Auto", new MyAutoCommand());
+        m_oi = new OI();
+
+
+        // AUTO STUFF
+        trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
+        m_chooser.addDefault("none", null);
+        for (String key : trajectories.keySet()) {
+            m_chooser.addObject(key, key);
+        }
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
+        // END AUTO STUFF
+
 	}
 
 	/**
@@ -114,7 +126,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		gyroSubsystem.resetGyro();
+		driveSubsystem.resetGyro();
 		mastSubsystem.resetEncoder();
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
@@ -132,31 +144,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
 		mastSubsystem.resetEncoder();
-		
-		autonomousinit.init();
-		/*if(autoSwitchSubsystem.getPosition() == -1) {
-			m_autonomousCommand = null;//new LeftAutonomous();
-		}else if (autoSwitchSubsystem.getPosition() == 1) {
-			m_autonomousCommand = null;//new RightAutonomous();
-		}else {
-			m_autonomousCommand = new CenterAutonomous();
-		}
-		m_autonomousCommand = new CenterAutonomous();
-*/
-		 strategy.start();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			//m_autonomousCommand.start();
-		}
+		autoFollower = new PathfinderFollower(trajectories.get(m_chooser.getSelected() == null ? "test-1" : m_chooser.getSelected()), driveSubsystem);
 	}
 
 	/**
@@ -165,6 +155,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		autoFollower.calcAndDrive();
 	}
 
 	@Override
@@ -192,7 +183,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", gyroSubsystem.gyroAngle());
+		SmartDashboard.putNumber("gyro", driveSubsystem.getGyroAngle());
 	}
 
 	/**
@@ -201,4 +192,46 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
+
+	// huge thanks to 3863 Pantherbotics for saying "just use our csv code"
+    public HashMap<String, Trajectory[]> getTrajectoriesfromDirectory(String dir) {
+	    HashMap<String, Trajectory[]> paths = new HashMap<>();
+	    ArrayList<File> filesInFolder;
+
+	    filesInFolder = listf(dir);
+	    for ( int i = filesInFolder.size() - 1; i >= 0; i--) {
+	        if (filesInFolder.get(i).getName().contains("_source_Jaci.csv")) {
+	            filesInFolder.remove(i);
+            }
+        }
+
+        for ( File traj : filesInFolder ) {
+            System.out.println(traj.getName());
+            paths.put(traj.getName().replace("_source_Jaci.csv", ""), new Trajectory[]{
+                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_left_"))),
+                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_right_"))),
+                    Pathfinder.readFromCSV(traj)});
+        }
+
+        return paths;
+    }
+
+    public ArrayList<File> listf(String directoryName) {
+        File directory = new File(directoryName);
+
+        ArrayList<File> resultList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] fList = directory.listFiles();
+        resultList.addAll(Arrays.asList(fList));
+        for (File file : fList) {
+            if (file.isFile()) {
+                System.out.println(file.getAbsolutePath());
+            } else if (file.isDirectory()) {
+                resultList.addAll(listf(file.getAbsolutePath()));
+            }
+        }
+        return resultList;
+    }
 }
