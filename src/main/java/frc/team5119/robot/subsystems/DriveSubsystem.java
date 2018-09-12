@@ -1,6 +1,7 @@
 package frc.team5119.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.SPI;
 import frc.team5119.robot.RobotMap;
 import frc.team5119.robot.commands.Drive;
@@ -9,54 +10,82 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.team5119.robot.util.Units;
 import jaci.pathfinder.Pathfinder;
 
 /**
  *
  */
 public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces.subsystems.DriveSubsystem {
-    //Talons
+    // DRIVETRAIN
     protected final WPI_TalonSRX
             frontRight = new WPI_TalonSRX(0),
             frontLeft = new WPI_TalonSRX(1),
             backRight = new WPI_TalonSRX(2),
             backLeft = new WPI_TalonSRX(3);
 
-    //Encoders
+    protected SpeedControllerGroup
+            rightMotors = new SpeedControllerGroup(frontRight, backRight),
+            leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
+    protected DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
+
+    // arcadeDrive speed limit: set to 1 when in normal driving
+    protected double safetySpeedModifier = 1;
+    // END DRIVETRAIN
+
+    // ENCODERS
 	protected Encoder
             leftEncoder = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
             rightEncoder = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
+	// END ENCODERS
 
-	//Speed limit: set to 1 when in normal driving
-	protected double safetySpeedModifier = 1;
-
-	//Drive Train
-	protected SpeedControllerGroup
-            rightMotors = new SpeedControllerGroup(frontRight, backRight),
-            leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
-	protected DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
-
+    // GYRO
 	protected AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 	@Deprecated
 	public double targetAngle = 0;
+	// END GYRO
+
+    // ODOMETRY
+    public volatile double x, y, theta;
+    // END ODOMETRY
 	
-	public DriveSubsystem() {
-		frontRight.configOpenloopRamp(.5, 1000);
-		frontLeft.configOpenloopRamp(.5, 1000);
-		backRight.configOpenloopRamp(.5, 1000);
-		backLeft.configOpenloopRamp(.5, 1000);
-		
-		leftEncoder.setDistancePerPulse(17.0/2048.0); //17 inches per rot/2048 ticks per rot
-		rightEncoder.setDistancePerPulse(17.0/2048.0);//17 inches per rot/2048 ticks per rot
-	}
-	
-    public void initDefaultCommand() {
-        setDefaultCommand(new Drive());
+    public void initDefaultCommand() {}
+
+    public void init() {
+        // TALON RAMPING
+        frontRight.configOpenloopRamp(.5, 1000);
+        frontLeft.configOpenloopRamp(.5, 1000);
+        backRight.configOpenloopRamp(.5, 1000);
+        backLeft.configOpenloopRamp(.5, 1000);
+        // END TALON RAMPING
+
+        // ENCODER SETUP
+        leftEncoder.setDistancePerPulse(1.4167/2048.0); //17 inches (1.4167 ft) per rot/2048 ticks per rot
+        rightEncoder.setDistancePerPulse(1.4167/2048.0);//17 inches (1.4167 ft) per rot/2048 ticks per rot
+        // END ENCODER SETUP
+
+        // ODOMETRY
+        new Thread(() -> {
+            int lastPos = (getLeftEncoder() + getRightEncoder()) / 2;
+            while (true) {
+                int currentPos = (getLeftEncoder() + getRightEncoder()) / 2;
+                double dPos = Units.encoderCountsToFeet(currentPos - lastPos);
+                theta = Pathfinder.d2r(Pathfinder.boundHalfDegrees(gyro.getAngle()));
+                x += Math.cos(theta) * dPos;
+                y += Math.sin(theta) * dPos;
+                lastPos = currentPos;
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        // END ODOMETRY
     }
 
     // DRIVING
-
     public void arcadeDrive(double fwd, double turn) {
     	drive.arcadeDrive(fwd * safetySpeedModifier, turn * safetySpeedModifier, false);
     }
@@ -64,9 +93,9 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
     public void tankDrive(double left, double right) {
 	    drive.tankDrive(left, right, false);
     }
+    // END DRIVING
 
     // ENCODERS
-
     public int getLeftEncoder() {
     	return leftEncoder.get();
     }
@@ -91,9 +120,9 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
     public boolean isStopped() {
     	return leftEncoder.getStopped() && rightEncoder.getStopped();
     }
+    // END ENCODERS
 
     // GYRO
-
     /**
      * @return gyro angle <b>in degrees</b>
      */
@@ -117,4 +146,5 @@ public class DriveSubsystem extends Subsystem implements frc.team5119.interfaces
         double angle = reference - getGyroAngle();
         return Pathfinder.boundHalfDegrees(angle);
     }
+    // END GYRO
 }

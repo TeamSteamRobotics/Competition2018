@@ -29,6 +29,7 @@ import java.util.logging.SimpleFormatter;
 
 import frc.team5119.robot.autonomous.AutonomousInit;
 import frc.team5119.robot.autonomous.Strategy;
+import frc.team5119.robot.commands.Drive;
 import frc.team5119.robot.subsystems.*;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -66,7 +67,7 @@ public class Robot extends TimedRobot {
 	public static UsbCamera cam1;
 	public static UsbCamera cam2;
 
-	Command m_autonomousCommand;
+	Command m_teleopCommand = new Drive();
 	SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	/**
@@ -120,7 +121,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+	    if (m_teleopCommand != null) {
+	        m_teleopCommand.cancel();
+        }
 	}
 
 	@Override
@@ -164,8 +167,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (m_teleopCommand != null) {
+			m_teleopCommand.start();
 		}
 	}
 
@@ -175,6 +178,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		if (!m_teleopCommand.isRunning()) {
+		    m_teleopCommand.start();
+        }
 		SmartDashboard.putBoolean("bottom", mastSubsystem.isAtBottom());
 		SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
 		SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
