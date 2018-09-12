@@ -6,7 +6,8 @@ import jaci.pathfinder.Pathfinder;
 public class OdometryUtil {
     private DriveSubsystem subsystem;
 
-    public volatile double x, y, theta;
+
+    public volatile Pose2D pos;
 
     private Thread odometryThread = new Thread(() -> {
         int lastPos = (subsystem.encoders.getLeft() + subsystem.encoders.getRight()) / 2;
@@ -14,9 +15,9 @@ public class OdometryUtil {
             int currentPos = (subsystem.encoders.getLeft() + subsystem.encoders.getRight()) / 2;
             double dPos = Units.encoderCountsToFeet(currentPos - lastPos);
             synchronized (this) {
-                theta = Pathfinder.d2r(Pathfinder.boundHalfDegrees(subsystem.gyro.getAngle()));
-                x += Math.cos(theta) * dPos;
-                y += Math.sin(theta) * dPos;
+                pos.theta = Pathfinder.d2r(Pathfinder.boundHalfDegrees(subsystem.gyro.getAngle()));
+                pos.x += Math.cos(pos.theta) * dPos;
+                pos.y += Math.sin(pos.theta) * dPos;
             }
             lastPos = currentPos;
             try {
@@ -33,30 +34,26 @@ public class OdometryUtil {
 
     public void init() {
         synchronized (this) {
-            x = 0;
-            y = 0;
-            theta = 0;
+            pos = new Pose2D(0,0,0);
         }
         odometryThread.start();
     }
 
     public void setPosition(double x, double y, double theta) {
         synchronized (this) {
-            this.x = x;
-            this.y = y;
-            this.theta = theta;
+            pos = new Pose2D(x, y, theta);
         }
     }
 
     public double getX() {
-        return x;
+        return pos.x;
     }
 
     public double getY() {
-        return y;
+        return pos.y;
     }
 
     public double getTheta() {
-        return theta;
+        return pos.theta;
     }
 }
