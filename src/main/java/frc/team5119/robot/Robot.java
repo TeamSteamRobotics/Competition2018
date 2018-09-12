@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
 	public static UsbCamera cam2;
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -87,11 +87,9 @@ public class Robot extends TimedRobot {
 	        // the following statement is used to log any messages  
 	        //logger.info("My first log");  
 
-	    } catch (SecurityException e) {  
+	    } catch (Exception e) {
 	        e.printStackTrace();  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
+	    }
 
 	    logger.info("Hi How r u?");
 		cam0 = CameraServer.getInstance().startAutomaticCapture("0",0);
@@ -101,11 +99,17 @@ public class Robot extends TimedRobot {
 		server = CameraServer.getInstance().getServer();
 		server.setSource(cam0);
 		visionSubsystem = new VisionSubsystem();
-		m_oi = new OI();
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+        m_oi = new OI();
 
-        //trajectoryGenerator = new TrajectoryGenerator(strategy.getSwitchLeft(autoSwitchSubsystem.getPosition()), strategy.getSwitchRight(autoSwitchSubsystem.getPosition()));
+
+        // AUTO STUFF
+        trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
+        m_chooser.addDefault("none", null);
+        for (String key : trajectories.keySet()) {
+            m_chooser.addObject(key, key);
+        }
+		SmartDashboard.putData("Auto mode", m_chooser);
+        // END AUTO STUFF
 
 	}
 
@@ -116,9 +120,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-	    DriverStation.reportWarning("disabledInit!", false);
-        trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
-        DriverStation.reportWarning("generation finished!", false);
+
 	}
 
 	@Override
@@ -144,11 +146,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		mastSubsystem.resetEncoder();
 
-		if (DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
-            autoFollower = new PathfinderFollower(trajectories.get("test-1"), driveSubsystem);
-        } else {
-            autoFollower = new PathfinderFollower(trajectories.get("test-2"), driveSubsystem);
-        }
+		autoFollower = new PathfinderFollower(trajectories.get(m_chooser.getSelected() == null ? "test-1" : m_chooser.getSelected()), driveSubsystem);
 	}
 
 	/**
