@@ -18,7 +18,7 @@ public class Debug extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//SmartDashboard.putNumber("encoder", Robot.driveSubsystem.getEncoderCount());
-    	SmartDashboard.putNumber("gyro", Robot.driveSubsystem.getGyroAngle());
+    	SmartDashboard.putNumber("gyro", Robot.driveSubsystem.gyro.getAngle());
     }
 
     // Called repeatedly when this Command is scheduled to run

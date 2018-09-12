@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team5119.robot.autonomous.PathfinderFollower;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,8 +26,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import frc.team5119.robot.autonomous.AutonomousInit;
-import frc.team5119.robot.autonomous.Strategy;
 import frc.team5119.robot.commands.Drive;
 import frc.team5119.robot.subsystems.*;
 import jaci.pathfinder.Pathfinder;
@@ -46,8 +43,6 @@ public class Robot extends TimedRobot {
 	public static final MastSubsystem mastSubsystem = new MastSubsystem();
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
-	public static final Strategy strategy = new Strategy();
-	public static final AutonomousInit autonomousinit = new AutonomousInit();
 	public static VisionSubsystem visionSubsystem;
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
 	public static OI m_oi;
@@ -102,6 +97,7 @@ public class Robot extends TimedRobot {
 		visionSubsystem = new VisionSubsystem();
         m_oi = new OI();
 
+        driveSubsystem.init();
 
         // AUTO STUFF
         trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
@@ -129,7 +125,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		driveSubsystem.resetGyro();
+		driveSubsystem.gyro.reset();
 		mastSubsystem.resetEncoder();
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
@@ -189,7 +185,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", driveSubsystem.getGyroAngle());
+		SmartDashboard.putNumber("gyro", driveSubsystem.gyro.getAngle());
 	}
 
 	/**

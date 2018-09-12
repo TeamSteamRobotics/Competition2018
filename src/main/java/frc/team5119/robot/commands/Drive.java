@@ -21,9 +21,9 @@ public class Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.m_oi.stick.getMagnitude()>.1) {
-    		Robot.driveSubsystem.arcadeDrive(-Robot.m_oi.stick.getY(), Robot.m_oi.stick.getX());
+    		Robot.driveSubsystem.drive.arcade(-Robot.m_oi.stick.getY(), Robot.m_oi.stick.getX());
     	}else {
-    		Robot.driveSubsystem.arcadeDrive(0, 0);
+    		Robot.driveSubsystem.drive.arcade(0, 0);
     	}
     }
 

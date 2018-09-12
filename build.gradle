@@ -37,18 +37,6 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
-    compile 'frc.team5119.interfaces:5119-interfaces:0.1.2-SNAPSHOT'
-}
-
-
-repositories {
-    maven {
-        credentials {
-            username 'guest'
-            password 'guest'
-        }
-        url "https://amrelk.com"
-    }
 }
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
