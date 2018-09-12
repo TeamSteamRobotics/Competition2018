@@ -37,7 +37,7 @@ dependencies {
     compile ctre()
     compile navx()
     compile pathfinder()
-    compile 'frc.team5119.interfaces:5119-interfaces:0.1.1-SNAPSHOT'
+    compile 'frc.team5119.interfaces:5119-interfaces:0.1.2-SNAPSHOT'
 }
 
 
