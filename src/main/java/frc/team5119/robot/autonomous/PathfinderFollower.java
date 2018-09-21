@@ -39,7 +39,8 @@ public class PathfinderFollower {
      * this method calculates the correct wheel speeds and then drives the bot based on that
      */
     public void calcAndDrive() {
-        double l = followerLeft.calculate(subsystem.encoders.getLeft());
+
+        /*double l = followerLeft.calculate(subsystem.encoders.getLeft());
         double r = followerRight.calculate(subsystem.encoders.getRight());
 
         double gyro_heading = subsystem.gyro.getAngle();    // Assuming the gyro is giving a value in degrees
@@ -47,6 +48,6 @@ public class PathfinderFollower {
 
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
         double turn = 0.8 * (-1.0/80.0) * angleDifference;
-        subsystem.drive.tank(l + turn, r - turn);
+        subsystem.drive.tank(l + turn, r - turn);*/
     }
 }

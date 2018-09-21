@@ -1,41 +1,54 @@
 package frc.team5119.robot.util;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import frc.team5119.robot.RobotMap;
 
 public class EncoderUtil {
-    private Encoder
-            leftEncoder = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
-            rightEncoder = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
+    public Encoder
+            left = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false),
+            right = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
 
     public void init() {
-        leftEncoder.setDistancePerPulse(1.4167/2048.0); //17 inches (1.4167 ft) per rot/2048 ticks per rot
-        rightEncoder.setDistancePerPulse(1.4167/2048.0);//17 inches (1.4167 ft) per rot/2048 ticks per rot
+        left.setDistancePerPulse(2 * Math.PI/2048.0); //2048 ticks per rot
+        right.setDistancePerPulse(2 * Math.PI/2048.0);//2048 ticks per rot
+        left.setPIDSourceType(PIDSourceType.kRate);
+        right.setPIDSourceType(PIDSourceType.kRate);
         reset();
     }
 
     public int getLeft() {
-        return leftEncoder.get();
+        return left.get();
     }
 
     public int getRight() {
-        return rightEncoder.get();
+        return right.get();
     }
 
     public double getLeftFeet() {
-        return leftEncoder.getDistance();
+        return left.getDistance();
     }
 
     public double getRightFeet() {
-        return rightEncoder.getDistance();
+        return right.getDistance();
     }
 
     public void reset() {
-        leftEncoder.reset();
-        rightEncoder.reset();
+        left.reset();
+        right.reset();
     }
 
     public boolean isStopped() {
-        return leftEncoder.getStopped() && rightEncoder.getStopped();
+        return left.getStopped() && right.getStopped();
     }
+
+    public double getLeftSpeed(){
+        return left.getRate();
+    }
+
+    public double getRightSpeed(){
+        return right.getRate();
+    }
+
+
 }

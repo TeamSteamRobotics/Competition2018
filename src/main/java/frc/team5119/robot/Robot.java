@@ -28,6 +28,7 @@ import java.util.logging.SimpleFormatter;
 
 import frc.team5119.robot.commands.*;
 import frc.team5119.robot.subsystems.*;
+import frc.team5119.robot.autonomous.RamseteFollower;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 	public static VisionSubsystem visionSubsystem;
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
+	public static RamseteFollower follower = new RamseteFollower();
 	public static OI m_oi;
 	
 	public static DriverStation driverStation = DriverStation.getInstance();
@@ -54,13 +56,16 @@ public class Robot extends TimedRobot {
     FileHandler fh;
 
 
-    HashMap<String, Trajectory[]> trajectories;
+    HashMap<String, Trajectory> trajectories;
     PathfinderFollower autoFollower;
 
 	public static VideoSink server;
 	public static UsbCamera cam0;
 	public static UsbCamera cam1;
 	public static UsbCamera cam2;
+
+	private int currentIndex;
+	private Trajectory autoTraj;
 
 	Command m_teleopCommand = new Drive();
 	SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -117,6 +122,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		driveSubsystem.drive.stopPID();;;;;;
 	    if (m_teleopCommand != null) {
 	        m_teleopCommand.cancel();
         }
@@ -144,8 +150,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		mastSubsystem.resetEncoder();
-
-		autoFollower = new PathfinderFollower(trajectories.get(m_chooser.getSelected() == null ? "test-1" : m_chooser.getSelected()), driveSubsystem);
+		currentIndex = 0;
+		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "test-1" : m_chooser.getSelected());
+		driveSubsystem.drive.startPID();
 	}
 
 	/**
@@ -154,11 +161,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		autoFollower.calcAndDrive();
+		//autoFollower.calcAndDrive();
+		follower.setMotorSpeeds(autoTraj, currentIndex);
+		currentIndex++;
 	}
 
 	@Override
 	public void teleopInit() {
+		driveSubsystem.drive.stopPID();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -197,8 +207,8 @@ public class Robot extends TimedRobot {
 
 
 	// huge thanks to 3863 Pantherbotics for saying "just use our csv code"
-    public HashMap<String, Trajectory[]> getTrajectoriesfromDirectory(String dir) {
-	    HashMap<String, Trajectory[]> paths = new HashMap<>();
+    public HashMap<String, Trajectory> getTrajectoriesfromDirectory(String dir) {
+	    HashMap<String, Trajectory> paths = new HashMap<>();
 	    ArrayList<File> filesInFolder;
 
 	    filesInFolder = listf(dir);
@@ -210,10 +220,7 @@ public class Robot extends TimedRobot {
 
         for ( File traj : filesInFolder ) {
             System.out.println(traj.getName());
-            paths.put(traj.getName().replace("_source_Jaci.csv", ""), new Trajectory[]{
-                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_left_"))),
-                    Pathfinder.readFromCSV(new File(traj.getAbsolutePath().replace("_source_", "_right_"))),
-                    Pathfinder.readFromCSV(traj)});
+            paths.put(traj.getName().replace("_source_Jaci.csv", ""), Pathfinder.readFromCSV(traj));
         }
 
         return paths;

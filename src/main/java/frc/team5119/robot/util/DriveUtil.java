@@ -1,10 +1,16 @@
 package frc.team5119.robot.util;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.team5119.robot.Robot;
 
 public class DriveUtil {
+    public PIDController leftPID;
+    public PIDController rightPID;
     private final WPI_TalonSRX
             frontRight = new WPI_TalonSRX(0),
             frontLeft = new WPI_TalonSRX(1),
@@ -26,6 +32,21 @@ public class DriveUtil {
         backRight.configOpenloopRamp(.5, 1000);
         backLeft.configOpenloopRamp(.5, 1000);
         // END TALON RAMPING
+
+        // PID
+        leftPID = new PIDController(0.1, 0.001, 0.0, Robot.driveSubsystem.encoders.left, leftMotors);
+        rightPID = new PIDController(0.1, 0.001, 0.0, Robot.driveSubsystem.encoders.right, rightMotors);
+        // END PID
+    }
+
+    public void startPID() {
+        leftPID.enable();
+        rightPID.enable();
+    }
+
+    public void stopPID() {
+        leftPID.disable();
+        rightPID.disable();
     }
 
     public void arcade(double fwd, double turn) {
