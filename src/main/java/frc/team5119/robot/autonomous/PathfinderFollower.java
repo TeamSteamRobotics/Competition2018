@@ -1,7 +1,7 @@
 package frc.team5119.robot.autonomous;
 
-import frc.team5119.robot.Constants;
-import frc.team5119.robot.subsystems.DriveSubsystem;
+import frc.team5119.robot.*;
+import frc.team5119.robot.subsystems.*;
 import frc.team5119.robot.Robot;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
