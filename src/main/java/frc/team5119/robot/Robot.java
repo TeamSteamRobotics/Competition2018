@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.team5119.robot.autonomous.PathfinderFollower;
-
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,7 +55,6 @@ public class Robot extends TimedRobot {
 
 
     HashMap<String, Trajectory> trajectories;
-    PathfinderFollower autoFollower;
 
 	public static VideoSink server;
 	public static UsbCamera cam0;
@@ -122,7 +119,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		driveSubsystem.drive.stopPID();;;;;;
+		driveSubsystem.drive.stopPID();
 	    if (m_teleopCommand != null) {
 	        m_teleopCommand.cancel();
         }
@@ -137,21 +134,13 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * resets everything
 	 */
 	@Override
 	public void autonomousInit() {
 		mastSubsystem.resetEncoder();
 		currentIndex = 0;
-		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "test-1" : m_chooser.getSelected());
+		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected());
 		driveSubsystem.drive.startPID();
 	}
 
@@ -161,7 +150,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//autoFollower.calcAndDrive();
+
 		follower.setMotorSpeeds(autoTraj, currentIndex);
 		currentIndex++;
 	}
@@ -169,10 +158,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		driveSubsystem.drive.stopPID();
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
+		// this starts the teleop command if it isn't null
 		if (m_teleopCommand != null) {
 			m_teleopCommand.start();
 		}

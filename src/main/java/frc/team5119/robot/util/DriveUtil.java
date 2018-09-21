@@ -6,9 +6,14 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.team5119.robot.Constants;
 import frc.team5119.robot.Robot;
+import frc.team5119.robot.subsystems.DriveSubsystem;
 
 public class DriveUtil {
+
+    private DriveSubsystem subsystem;
+
     public PIDController leftPID;
     public PIDController rightPID;
     private final WPI_TalonSRX
@@ -25,6 +30,10 @@ public class DriveUtil {
     // arcadeDrive speed limit: set to 1 when in normal driving
     private double arcadeSafetySpeedModifier = 1;
 
+    public DriveUtil(DriveSubsystem driveSubsystem) {
+        subsystem = driveSubsystem;
+    }
+
     public void init() {
         // TALON RAMPING
         frontRight.configOpenloopRamp(.5, 1000);
@@ -34,8 +43,8 @@ public class DriveUtil {
         // END TALON RAMPING
 
         // PID
-        leftPID = new PIDController(0.1, 0.001, 0.0, Robot.driveSubsystem.encoders.left, leftMotors);
-        rightPID = new PIDController(0.1, 0.001, 0.0, Robot.driveSubsystem.encoders.right, rightMotors);
+        leftPID = new PIDController(Constants.kp, Constants.ki, Constants.kd, subsystem.encoders.left, leftMotors);
+        rightPID = new PIDController(Constants.kp, Constants.ki, Constants.kd, subsystem.encoders.right, rightMotors);
         // END PID
     }
 

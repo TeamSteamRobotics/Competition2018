@@ -18,9 +18,9 @@ import jaci.pathfinder.Pathfinder;
  *
  */
 public class DriveSubsystem extends Subsystem {
-    public DriveUtil drive = new DriveUtil();
-    public EncoderUtil encoders = new EncoderUtil();
-    public GyroUtil gyro = new GyroUtil();
+    public DriveUtil drive = new DriveUtil(this);
+    public EncoderUtil encoders = new EncoderUtil(this);
+    public GyroUtil gyro = new GyroUtil(this);
     public OdometryUtil odo = new OdometryUtil(this);
 	
     public void initDefaultCommand() {}
