@@ -7,7 +7,7 @@ public class OdometryUtil {
     private DriveSubsystem subsystem;
 
 
-    public volatile Pose2D pose;
+    private volatile Pose2D pose;
 
     private Thread odometryThread = new Thread(() -> {
         int lastPos = (subsystem.encoders.left.get() + subsystem.encoders.right.get()) / 2;

@@ -9,11 +9,20 @@ package frc.team5119.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team5119.robot.autonomous.PositionCommandHandler;
+import frc.team5119.robot.autonomous.RamseteFollower;
+import frc.team5119.robot.commands.Drive;
+import frc.team5119.robot.subsystems.*;
+import frc.team5119.robot.util.Pose2D;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -23,13 +32,6 @@ import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
-import frc.team5119.robot.commands.*;
-import frc.team5119.robot.subsystems.*;
-import frc.team5119.robot.autonomous.RamseteFollower;
-import frc.team5119.robot.util.Pose2D;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -152,8 +154,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
 		follower.setMotorSpeeds(autoTraj, currentIndex);
+        PositionCommandHandler.getInstance().run(driveSubsystem.odo.getPose());
 		currentIndex++;
 	}
 

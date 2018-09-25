@@ -7,11 +7,9 @@
 
 package frc.team5119.robot.subsystems;
 
-import frc.team5119.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.team5119.robot.RobotMap;
 
 /**
  * The subsystem that controls the winch.
