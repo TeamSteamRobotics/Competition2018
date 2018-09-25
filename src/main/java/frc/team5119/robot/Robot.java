@@ -27,6 +27,7 @@ import java.util.logging.SimpleFormatter;
 import frc.team5119.robot.commands.*;
 import frc.team5119.robot.subsystems.*;
 import frc.team5119.robot.autonomous.RamseteFollower;
+import frc.team5119.robot.util.Pose2D;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 
@@ -141,6 +142,7 @@ public class Robot extends TimedRobot {
 		mastSubsystem.resetEncoder();
 		currentIndex = 0;
 		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected());
+		driveSubsystem.odo.setPose(new Pose2D(autoTraj.get(0).x, autoTraj.get(0).y, autoTraj.get(0).heading));
 		driveSubsystem.drive.startPID();
 	}
 
