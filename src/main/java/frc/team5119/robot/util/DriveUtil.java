@@ -2,12 +2,9 @@ package frc.team5119.robot.util;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.team5119.robot.Constants;
-import frc.team5119.robot.Robot;
 import frc.team5119.robot.subsystems.DriveSubsystem;
 
 public class DriveUtil {

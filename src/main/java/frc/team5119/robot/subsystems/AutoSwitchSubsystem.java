@@ -1,11 +1,9 @@
 package frc.team5119.robot.subsystems;
 
-import frc.team5119.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team5119.robot.RobotMap;
 
 /**
  *

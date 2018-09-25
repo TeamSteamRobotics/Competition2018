@@ -34,7 +34,7 @@ public class RamseteFollower {
         }
     }
     public void setMotorSpeeds(Trajectory path, int currentSegment){
-        update(path.get(currentSegment), path.get(currentSegment + 1), Robot.driveSubsystem.odo.pose.copy());
+        update(path.get(currentSegment), path.get(currentSegment + 1), Robot.driveSubsystem.odo.getPose());
 
         double w_L = (Constants.k_wheelbase * w - 2*v)/(-2 * Constants.k_wheelRadius);
         double w_R = (Constants.k_wheelbase * w + 2*v)/(2 * Constants.k_wheelRadius);
