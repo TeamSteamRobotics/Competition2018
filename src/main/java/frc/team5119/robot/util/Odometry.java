@@ -15,7 +15,7 @@ public class Odometry {
             int currentPos = (subsystem.left.get() + subsystem.right.get()) / 2;
             double dPos = Units.encoderCountsToFeet(currentPos - lastPos);
             synchronized (this) {
-                pose.theta = Pathfinder.d2r(Pathfinder.boundHalfDegrees(subsystem.ahrs.getAngle()));
+                pose.theta = Pathfinder.d2r(subsystem.ahrs.getYaw());
                 pose.x += Math.cos(pose.theta) * dPos;
                 pose.y += Math.sin(pose.theta) * dPos;
             }

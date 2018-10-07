@@ -130,7 +130,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.ahrs.reset();
 		mastSubsystem.resetEncoder();
 	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
@@ -182,7 +181,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", drivetrain.ahrs.getAngle());
+		SmartDashboard.putNumber("gyro", drivetrain.ahrs.getYaw());
 	}
 
 	/**
