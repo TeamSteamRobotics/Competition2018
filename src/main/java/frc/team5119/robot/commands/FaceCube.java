@@ -12,7 +12,7 @@ public class FaceCube extends Command {
 
     public FaceCube() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveSubsystem);
+        requires(Robot.drivetrain);
         requires(Robot.visionSubsystem);
     }
 
@@ -30,7 +30,7 @@ public class FaceCube extends Command {
     	xCorrectionSpeed = correctionConstant*(pegX)/640;
     	
     	
-    	Robot.driveSubsystem.drive.arcade(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
+    	Robot.drivetrain.arcadeDrive(-Robot.m_oi.stick.getY(), xCorrectionSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
