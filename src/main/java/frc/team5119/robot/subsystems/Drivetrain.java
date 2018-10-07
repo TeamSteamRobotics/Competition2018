@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team5119.robot.RobotMap;
 import frc.team5119.robot.util.Odometry;
@@ -19,6 +18,8 @@ public class Drivetrain extends Subsystem {
     public Side right;
     public Odometry odo;
     public AHRS ahrs;
+
+    private boolean isRamping = false;
 	
     public void initDefaultCommand() {}
 
@@ -27,6 +28,26 @@ public class Drivetrain extends Subsystem {
         right = new Side("right");
         odo = new Odometry(this);
         ahrs = new AHRS(SPI.Port.kMXP);
+    }
+
+    public void startRamping() {
+        if (!isRamping) {
+            left.startRamping();
+            right.startRamping();
+            isRamping = true;
+        }
+    }
+
+    public void stopRamping() {
+        if (isRamping) {
+            left.stopRamping();
+            right.stopRamping();
+            isRamping = false;
+        }
+    }
+
+    public boolean isRamping() {
+        return isRamping;
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
@@ -85,14 +106,14 @@ public class Drivetrain extends Subsystem {
             back.set(ControlMode.PercentOutput, percentOutput);
         }
 
-        public void startRamping() {
-            front.configOpenloopRamp(0.5,1000);
+        void startRamping() {
+            front.configOpenloopRamp(0.5, 1000);
             back.configOpenloopRamp(0.5, 1000);
         }
 
-        public void stopRamping() {
-            front.configOpenloopRamp(0, 1000);
-            back.configOpenloopRamp(0, 1000);
+        void stopRamping() {
+                front.configOpenloopRamp(0, 1000);
+                back.configOpenloopRamp(0, 1000);
         }
 
         public int get() {

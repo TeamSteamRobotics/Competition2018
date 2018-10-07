@@ -131,7 +131,6 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		mastSubsystem.resetEncoder();
-	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
 	/**
@@ -139,6 +138,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	    if (drivetrain.isRamping()) {
+            DriverStation.reportError("Ramping is on in autonomous! You should know better than that!", false);
+        }
 		mastSubsystem.resetEncoder();
 		currentIndex = 0;
 		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected());
@@ -162,6 +164,7 @@ public class Robot extends TimedRobot {
 		if (m_teleopCommand != null) {
 			m_teleopCommand.start();
 		}
+		drivetrain.startRamping();
 	}
 
 	/**
