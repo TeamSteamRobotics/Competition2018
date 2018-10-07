@@ -1,21 +1,21 @@
 package frc.team5119.robot.util;
 
-import frc.team5119.robot.subsystems.DriveSubsystem;
+import frc.team5119.robot.subsystems.Drivetrain;
 import jaci.pathfinder.Pathfinder;
 
-public class OdometryUtil {
-    private DriveSubsystem subsystem;
+public class Odometry {
+    private Drivetrain subsystem;
 
 
     private volatile Pose2D pose;
 
     private Thread odometryThread = new Thread(() -> {
-        int lastPos = (subsystem.encoders.left.get() + subsystem.encoders.right.get()) / 2;
+        int lastPos = (subsystem.left.get() + subsystem.right.get()) / 2;
         while (true) {
-            int currentPos = (subsystem.encoders.left.get() + subsystem.encoders.right.get()) / 2;
+            int currentPos = (subsystem.left.get() + subsystem.right.get()) / 2;
             double dPos = Units.encoderCountsToFeet(currentPos - lastPos);
             synchronized (this) {
-                pose.theta = Pathfinder.d2r(Pathfinder.boundHalfDegrees(subsystem.gyro.getAngle()));
+                pose.theta = Pathfinder.d2r(subsystem.ahrs.getYaw());
                 pose.x += Math.cos(pose.theta) * dPos;
                 pose.y += Math.sin(pose.theta) * dPos;
             }
@@ -28,11 +28,8 @@ public class OdometryUtil {
         }
     });
 
-    public OdometryUtil(DriveSubsystem driveSubsystem) {
-        subsystem = driveSubsystem;
-    }
-
-    public void init() {
+    public Odometry(Drivetrain drivetrain) {
+        subsystem = drivetrain;
         synchronized (this) {
             pose = new Pose2D(0,0,0);
         }

@@ -41,7 +41,7 @@ import java.util.logging.SimpleFormatter;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final MastSubsystem mastSubsystem = new MastSubsystem();
 	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
 		visionSubsystem = new VisionSubsystem();
         m_oi = new OI();
 
-        driveSubsystem.init();
+        drivetrain.init();
 
         // AUTO STUFF
         trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
@@ -122,7 +122,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		driveSubsystem.drive.stopPID();
 	    if (m_teleopCommand != null) {
 	        m_teleopCommand.cancel();
         }
@@ -131,9 +130,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		driveSubsystem.gyro.reset();
 		mastSubsystem.resetEncoder();
-	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
 	}
 
 	/**
@@ -141,11 +138,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	    if (drivetrain.isRamping()) {
+            DriverStation.reportError("Ramping is on in autonomous! You should know better than that!", false);
+        }
 		mastSubsystem.resetEncoder();
 		currentIndex = 0;
 		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected());
-		driveSubsystem.odo.setPose(new Pose2D(autoTraj.get(0).x, autoTraj.get(0).y, autoTraj.get(0).heading));
-		driveSubsystem.drive.startPID();
+		drivetrain.odo.setPose(new Pose2D(autoTraj.get(0).x, autoTraj.get(0).y, autoTraj.get(0).heading));
 	}
 
 	/**
@@ -155,17 +154,17 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		follower.setMotorSpeeds(autoTraj, currentIndex);
-        PositionCommandHandler.getInstance().run(driveSubsystem.odo.getPose());
+        PositionCommandHandler.getInstance().run(drivetrain.odo.getPose());
 		currentIndex++;
 	}
 
 	@Override
 	public void teleopInit() {
-		driveSubsystem.drive.stopPID();
 		// this starts the teleop command if it isn't null
 		if (m_teleopCommand != null) {
 			m_teleopCommand.start();
 		}
+		drivetrain.startRamping();
 	}
 
 	/**
@@ -185,7 +184,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
 		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
 		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", driveSubsystem.gyro.getAngle());
+		SmartDashboard.putNumber("gyro", drivetrain.ahrs.getYaw());
 	}
 
 	/**

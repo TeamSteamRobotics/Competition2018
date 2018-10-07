@@ -43,7 +43,12 @@ public class RobotMap {
 		//winch
 			winchMotor = 4,
 			
-	//drive
+	//drivetrain
+	    //talon SRX CAN IDs
+            frontRightTalon = 0,
+            frontLeftTalon = 1,
+            backRightTalon = 2,
+            backLeftTalon = 3,
 		//sensors
 			leftDriveEncA = 0,
 			leftDriveEncB = 1,
