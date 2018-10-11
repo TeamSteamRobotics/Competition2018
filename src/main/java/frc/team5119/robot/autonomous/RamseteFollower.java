@@ -1,29 +1,56 @@
 package frc.team5119.robot.autonomous;
 
+import edu.wpi.first.wpilibj.command.Command;
 import frc.team5119.robot.Constants;
 import frc.team5119.robot.Robot;
 import jaci.pathfinder.Trajectory;
 import frc.team5119.robot.util.Pose2D;
 import jaci.pathfinder.Trajectory.Segment;
 
-public class RamseteFollower {
-    private double v, w, k1, k3, e_x, e_y, e_theta, v_d, w_d;
+public class RamseteFollower extends Command {
+
+    private Trajectory path;
+    private int segment = 0;
+    private double v, w, k1, k3, e_x, e_y, e_theta, v_d, w_d, w_L, w_R;
     private final double
             b = 0.7,
             zeta = 0.8,
             k2 = b;
+    private Pose2D currentPose;
 
+    public RamseteFollower(Trajectory trajectory) {
+        path = trajectory;
 
-    private void update(Segment seg, Segment nextSeg, Pose2D currentPose) {
-        v_d = seg.velocity;
-        w_d = (nextSeg.heading - seg.heading)/seg.dt;
+        requires(Robot.drivetrain);
+    }
+
+    public void initialize() {
+
+    }
+
+    public void execute() {
+        currentPose = Robot.drivetrain.odo.getPose();
+
+        v_d = path.get(segment).velocity;
+        w_d = (path.get(segment+1).heading - path.get(segment).heading)/path.get(segment).dt;
         k1 = 2 * zeta * Math.sqrt(Math.pow(w_d, 2) + b * Math.pow(v_d, 2));
         k3 = k1;
-        e_x = Math.cos(currentPose.theta) * (seg.x - currentPose.x) + Math.sin(currentPose.theta) * (seg.y - currentPose.y);
-        e_y = Math.cos(currentPose.theta) * (seg.y - currentPose.y) - Math.sin(currentPose.theta) * (seg.x - currentPose.x);
-        e_theta = seg.heading - currentPose.theta;
+
+        e_x = Math.cos(currentPose.theta) * (path.get(segment).x - currentPose.x) + Math.sin(currentPose.theta) * (path.get(segment).y - currentPose.y);
+        e_y = Math.cos(currentPose.theta) * (path.get(segment).y - currentPose.y) - Math.sin(currentPose.theta) * (path.get(segment).x - currentPose.x);
+        e_theta = path.get(segment).heading - currentPose.theta;
+
         v = v_d * Math.cos(e_theta) + k1 * e_x;
         w = w_d + k2 * sinE_thetaOverE_theta() * e_y + k3 * e_theta;
+
+        w_L = (Constants.k_wheelbase * w - 2*v)/(-2 * Constants.k_wheelRadius);
+        w_R = (Constants.k_wheelbase * w + 2*v)/(2 * Constants.k_wheelRadius);
+
+        // TODO add PID to Drivetrain and then here
+    }
+
+    public boolean isFinished() {
+        return segment >= path.length();
     }
 
     private double sinE_thetaOverE_theta() {
@@ -33,12 +60,8 @@ public class RamseteFollower {
             return Math.sin(e_theta)/e_theta;
         }
     }
-    public void setMotorSpeeds(Trajectory path, int currentSegment){
-        update(path.get(currentSegment), path.get(currentSegment + 1), Robot.drivetrain.odo.getPose());
 
-        double w_L = (Constants.k_wheelbase * w - 2*v)/(-2 * Constants.k_wheelRadius);
-        double w_R = (Constants.k_wheelbase * w + 2*v)/(2 * Constants.k_wheelRadius);
-
-        // ree set speeds ree
+    public Pose2D firstPose() {
+        return new Pose2D(path.get(0).x, path.get(0).y, path.get(0).heading);
     }
 }

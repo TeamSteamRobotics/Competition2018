@@ -47,7 +47,6 @@ public class Robot extends TimedRobot {
 	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
 	public static VisionSubsystem visionSubsystem;
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
-	public static RamseteFollower follower = new RamseteFollower();
 	public static OI m_oi;
 	
 	public static DriverStation driverStation = DriverStation.getInstance();
@@ -64,8 +63,7 @@ public class Robot extends TimedRobot {
 	public static UsbCamera cam1;
 	public static UsbCamera cam2;
 
-	private int currentIndex;
-	private Trajectory autoTraj;
+	RamseteFollower follower;
 
 	Command m_teleopCommand = new Drive();
 	SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -142,9 +140,9 @@ public class Robot extends TimedRobot {
             DriverStation.reportError("Ramping is on in autonomous! You should know better than that!", false);
         }
 		mastSubsystem.resetEncoder();
-		currentIndex = 0;
-		autoTraj = trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected());
-		drivetrain.odo.setPose(new Pose2D(autoTraj.get(0).x, autoTraj.get(0).y, autoTraj.get(0).heading));
+		follower = new RamseteFollower(trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected()));
+		drivetrain.odo.setPose(follower.firstPose());
+		follower.start();
 	}
 
 	/**
@@ -153,9 +151,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		follower.setMotorSpeeds(autoTraj, currentIndex);
         PositionCommandHandler.getInstance().run(drivetrain.odo.getPose());
-		currentIndex++;
 	}
 
 	@Override
