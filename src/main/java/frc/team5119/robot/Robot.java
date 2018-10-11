@@ -143,6 +143,7 @@ public class Robot extends TimedRobot {
 		follower = new RamseteFollower(trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected()));
 		drivetrain.odo.setPose(follower.firstPose());
 		follower.start();
+		drivetrain.startPID();
 	}
 
 	/**
@@ -161,6 +162,7 @@ public class Robot extends TimedRobot {
 			m_teleopCommand.start();
 		}
 		drivetrain.startRamping();
+		drivetrain.stopPID();
 	}
 
 	/**

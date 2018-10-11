@@ -46,7 +46,8 @@ public class RamseteFollower extends Command {
         w_L = (Constants.k_wheelbase * w - 2*v)/(-2 * Constants.k_wheelRadius);
         w_R = (Constants.k_wheelbase * w + 2*v)/(2 * Constants.k_wheelRadius);
 
-        // TODO add PID to Drivetrain and then here
+        Robot.drivetrain.left.setSpeed(w_L);
+        Robot.drivetrain.right.setSpeed(w_R);
     }
 
     public boolean isFinished() {
