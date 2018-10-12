@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.team5119.robot.Constants;
 import frc.team5119.robot.RobotMap;
 import frc.team5119.robot.util.Odometry;
 
@@ -46,6 +48,16 @@ public class Drivetrain extends Subsystem {
         }
     }
 
+    public void startPID() {
+        left.startPID();
+        right.startPID();
+    }
+
+    public void stopPID() {
+        left.stopPID();
+        right.stopPID();
+    }
+
     public boolean isRamping() {
         return isRamping;
     }
@@ -77,7 +89,7 @@ public class Drivetrain extends Subsystem {
         }
 
         left.set(leftMotorOutput);
-        right.set(-rightMotorOutput);
+        right.set(rightMotorOutput);
 
     }
 
@@ -85,6 +97,17 @@ public class Drivetrain extends Subsystem {
 
         private final TalonSRX front, back;
         private final Encoder quadrature;
+        public volatile double PIDSetpoint = 0;
+        private volatile double lastRate = 0;
+
+        private Notifier PIDLoop = new Notifier(() -> {
+            double rate = getRate();
+            double output = Constants.kf * PIDSetpoint;
+            output += Constants.kp * (PIDSetpoint - rate);
+            output -= Constants.kd * (rate - lastRate);
+            set(output);
+            lastRate = rate;
+        });
 
         Side(String side) {
             if (side.equals("left")) {
@@ -94,6 +117,8 @@ public class Drivetrain extends Subsystem {
             } else {
                 front = new TalonSRX(RobotMap.frontRightTalon);
                 back = new TalonSRX(RobotMap.backRightTalon);
+                front.setInverted(true);
+                back.setInverted(true);
                 quadrature = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
             }
 
@@ -104,6 +129,18 @@ public class Drivetrain extends Subsystem {
             percentOutput = Math.max(-1, Math.min(1, percentOutput));
             front.set(ControlMode.PercentOutput, percentOutput);
             back.set(ControlMode.PercentOutput, percentOutput);
+        }
+
+        public void startPID() {
+            PIDLoop.startPeriodic(0.01);
+        }
+
+        public void stopPID() {
+            PIDLoop.stop();
+        }
+
+        public void setSpeed(double setpoint) {
+            PIDSetpoint = setpoint;
         }
 
         void startRamping() {
