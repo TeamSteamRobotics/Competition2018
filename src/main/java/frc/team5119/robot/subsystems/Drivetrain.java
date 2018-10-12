@@ -89,7 +89,7 @@ public class Drivetrain extends Subsystem {
         }
 
         left.set(leftMotorOutput);
-        right.set(-rightMotorOutput);
+        right.set(rightMotorOutput);
 
     }
 
