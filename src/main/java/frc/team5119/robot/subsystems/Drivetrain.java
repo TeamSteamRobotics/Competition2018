@@ -102,7 +102,8 @@ public class Drivetrain extends Subsystem {
 
         private Notifier PIDLoop = new Notifier(() -> {
             double rate = getRate();
-            double output = Constants.kp * (PIDSetpoint - rate);
+            double output = Constants.kf * PIDSetpoint;
+            output += Constants.kp * (PIDSetpoint - rate);
             output -= Constants.kd * (rate - lastRate);
             set(output);
             lastRate = rate;
@@ -116,6 +117,8 @@ public class Drivetrain extends Subsystem {
             } else {
                 front = new TalonSRX(RobotMap.frontRightTalon);
                 back = new TalonSRX(RobotMap.backRightTalon);
+                front.setInverted(true);
+                back.setInverted(true);
                 quadrature = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
             }
 

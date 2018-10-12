@@ -7,7 +7,8 @@ public class Constants {
             k_wheelbase = 0.7,
             k_wheelRadius = 0.15,
         //wheel PID tuning
-            kp = 0.1,
+            kf = 0.0236,
+            kp = 0.01,
             ki = 0.001,
             kd = 0.0;
     public static String
