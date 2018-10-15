@@ -42,6 +42,12 @@ public class Odometry {
         }
     }
 
+    public void setPose(double x, double y, double theta) {
+        synchronized (this) {
+            pose = new Pose2D(x, y, theta);
+        }
+    }
+
     public Pose2D getPose() {
         return pose.copy();
     }
