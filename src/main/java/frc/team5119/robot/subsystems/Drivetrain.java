@@ -95,15 +95,15 @@ public class Drivetrain extends Subsystem {
 
     public class Side {
 
-        private final TalonSRX front, back;
+        private final TalonSRX master, follower;
         private final Encoder quadrature;
-        public volatile double PIDSetpoint = 0;
+        private volatile double setpoint = 0;
         private volatile double lastRate = 0;
 
         private Notifier PIDLoop = new Notifier(() -> {
             double rate = getRate();
-            double output = Constants.kf * PIDSetpoint;
-            output += Constants.kp * (PIDSetpoint - rate);
+            double output = Constants.kf * setpoint;
+            output += Constants.kp * (setpoint - rate);
             output -= Constants.kd * (rate - lastRate);
             set(output);
             lastRate = rate;
@@ -111,24 +111,25 @@ public class Drivetrain extends Subsystem {
 
         Side(String side) {
             if (side.equals("left")) {
-                front = new TalonSRX(RobotMap.frontLeftTalon);
-                back = new TalonSRX(RobotMap.backLeftTalon);
+                master = new TalonSRX(RobotMap.frontLeftTalon);
+                follower = new TalonSRX(RobotMap.backLeftTalon);
                 quadrature = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false);
             } else {
-                front = new TalonSRX(RobotMap.frontRightTalon);
-                back = new TalonSRX(RobotMap.backRightTalon);
-                front.setInverted(true);
-                back.setInverted(true);
+                master = new TalonSRX(RobotMap.frontRightTalon);
+                follower = new TalonSRX(RobotMap.backRightTalon);
+                master.setInverted(true);
+                follower.setInverted(true);
                 quadrature = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);
             }
+
+            follower.follow(master);
 
             quadrature.setDistancePerPulse(2 * Math.PI/2048.0); //should make getRate() return rad/s
         }
 
         public void set(double percentOutput) {
             percentOutput = Math.max(-1, Math.min(1, percentOutput));
-            front.set(ControlMode.PercentOutput, percentOutput);
-            back.set(ControlMode.PercentOutput, percentOutput);
+            master.set(ControlMode.PercentOutput, percentOutput);
         }
 
         public void startPID() {
@@ -140,17 +141,15 @@ public class Drivetrain extends Subsystem {
         }
 
         public void setSpeed(double setpoint) {
-            PIDSetpoint = setpoint;
+            this.setpoint = setpoint;
         }
 
         void startRamping() {
-            front.configOpenloopRamp(0.5, 1000);
-            back.configOpenloopRamp(0.5, 1000);
+            master.configOpenloopRamp(0.5, 1000);
         }
 
         void stopRamping() {
-                front.configOpenloopRamp(0, 1000);
-                back.configOpenloopRamp(0, 1000);
+                master.configOpenloopRamp(0, 1000);
         }
 
         public int get() {
