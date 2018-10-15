@@ -25,7 +25,8 @@ public class RamseteFollower extends Command {
     }
 
     public void initialize() {
-
+        Robot.drivetrain.startPID();
+        Robot.drivetrain.odo.setPose(path.get(0).x, path.get(0).y, path.get(0).heading);
     }
 
     public void execute() {
@@ -48,6 +49,10 @@ public class RamseteFollower extends Command {
 
         Robot.drivetrain.left.setSpeed(w_L);
         Robot.drivetrain.right.setSpeed(w_R);
+    }
+
+    public void end() {
+        Robot.drivetrain.stopPID();
     }
 
     public boolean isFinished() {

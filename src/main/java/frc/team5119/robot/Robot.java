@@ -141,9 +141,7 @@ public class Robot extends TimedRobot {
         }
 		mastSubsystem.resetEncoder();
 		follower = new RamseteFollower(trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected()));
-		drivetrain.odo.setPose(follower.firstPose());
 		follower.start();
-		drivetrain.startPID();
 	}
 
 	/**
