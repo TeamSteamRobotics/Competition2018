@@ -18,6 +18,8 @@ public class RamseteFollower extends Command {
             k2 = b;
     private Pose2D currentPose;
 
+    public Telemetry telemetry;
+
     public RamseteFollower(Trajectory trajectory) {
         path = trajectory;
 
@@ -25,6 +27,7 @@ public class RamseteFollower extends Command {
     }
 
     public void initialize() {
+        telemetry = new Telemetry();
         Robot.drivetrain.startPID();
         Robot.drivetrain.odo.setPose(path.get(0).x, path.get(0).y, path.get(0).heading);
     }
@@ -49,6 +52,8 @@ public class RamseteFollower extends Command {
 
         Robot.drivetrain.left.setSpeed(w_L);
         Robot.drivetrain.right.setSpeed(w_R);
+
+        Robot.telemetry.send();
     }
 
     public void end() {
@@ -67,7 +72,13 @@ public class RamseteFollower extends Command {
         }
     }
 
-    public Pose2D firstPose() {
-        return new Pose2D(path.get(0).x, path.get(0).y, path.get(0).heading);
+    public class Telemetry {
+        public double pathX, pathY, pathHeading;
+
+        public void update() {
+            pathX = path.get(segment).x;
+            pathY = path.get(segment).y;
+            pathHeading = path.get(segment).heading;
+        }
     }
 }

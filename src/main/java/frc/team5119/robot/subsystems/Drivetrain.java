@@ -20,6 +20,7 @@ public class Drivetrain extends Subsystem {
     public Side right;
     public Odometry odo;
     public AHRS ahrs;
+    public Telemetry telemetry;
 
     private boolean isRamping = false;
 	
@@ -30,6 +31,7 @@ public class Drivetrain extends Subsystem {
         right = new Side("right");
         odo = new Odometry(this);
         ahrs = new AHRS(SPI.Port.kMXP);
+        telemetry = new Telemetry();
     }
 
     public void startRamping() {
@@ -95,7 +97,7 @@ public class Drivetrain extends Subsystem {
 
     public class Side {
 
-        private final TalonSRX master, follower;
+        final TalonSRX master, follower;
         private final Encoder quadrature;
         private volatile double setpoint = 0;
         private volatile double lastRate = 0;
@@ -158,6 +160,22 @@ public class Drivetrain extends Subsystem {
 
         public double getRate() {
             return quadrature.getRate();
+        }
+    }
+
+    public class Telemetry {
+        public double
+                leftPct, leftAmps, leftEnc,
+                rightPct, rightAmps, rightEnc;
+
+        public void update() {
+            leftPct = left.master.getMotorOutputPercent();
+            leftAmps = left.master.getOutputCurrent() + left.follower.getOutputCurrent();
+            leftEnc = left.get();
+
+            rightPct = right.master.getMotorOutputPercent();
+            rightAmps = right.master.getOutputCurrent() + right.follower.getOutputCurrent();
+            rightEnc = right.get();
         }
     }
 }

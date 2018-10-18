@@ -1,7 +1,7 @@
 package frc.team5119.robot;
 
 public class Constants {
-    public static double
+    public static final double
     //pathfinder
         // chassis
             k_wheelbase = 0.7,
@@ -11,6 +11,6 @@ public class Constants {
             kp = 1,
             ki = 0.001,
             kd = 0.2;
-    public static String
+    public static final String
             k_pathLocation = "/home/lvuser/paths/";
 }

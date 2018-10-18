@@ -51,4 +51,16 @@ public class Odometry {
     public Pose2D getPose() {
         return pose.copy();
     }
+
+    public double getX() {
+        return pose.x;
+    }
+
+    public double getY() {
+        return pose.y;
+    }
+
+    public double getTheta() {
+        return pose.theta;
+    }
 }

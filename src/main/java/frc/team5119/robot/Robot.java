@@ -21,6 +21,7 @@ import frc.team5119.robot.autonomous.RamseteFollower;
 import frc.team5119.robot.commands.Drive;
 import frc.team5119.robot.subsystems.*;
 import frc.team5119.robot.util.Pose2D;
+import frc.team5119.robot.util.Telemetry;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 
@@ -48,9 +49,11 @@ public class Robot extends TimedRobot {
 	public static VisionSubsystem visionSubsystem;
 	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
 	public static OI m_oi;
+
+	public static final Telemetry telemetry = new Telemetry();
 	
-	public static DriverStation driverStation = DriverStation.getInstance();
-	public static String switchPositions = "LLR";//driverStation.getGameSpecificMessage();
+	public static final DriverStation driverStation = DriverStation.getInstance();
+	public static String gameData;
 	
     public static Logger logger = Logger.getLogger("RobotLog");  
     FileHandler fh;
@@ -63,7 +66,7 @@ public class Robot extends TimedRobot {
 	public static UsbCamera cam1;
 	public static UsbCamera cam2;
 
-	RamseteFollower follower;
+	public static RamseteFollower follower;
 
 	Command m_teleopCommand = new Drive();
 	SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -136,6 +139,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	    gameData = driverStation.getGameSpecificMessage();
 	    if (drivetrain.isRamping()) {
             DriverStation.reportError("Ramping is on in autonomous! You should know better than that!", false);
         }
