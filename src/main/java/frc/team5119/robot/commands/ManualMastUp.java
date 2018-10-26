@@ -14,40 +14,39 @@ import frc.team5119.robot.Robot;
  * This makes the mast go up.
  */
 public class ManualMastUp extends Command {
-	public ManualMastUp() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.mastSubsystem);
-	}
+    public ManualMastUp() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.mastSubsystem);
+    }
 
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
-	}
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {}
 
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
-		if (true) {//!Robot.mastSubsystem.isAtTop()) {
-			Robot.mastSubsystem.move(-1);
-		}
-	}
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        if (true) { //!Robot.mastSubsystem.isAtTop()) {
+            Robot.mastSubsystem.move(-1);
+        }
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	@Override
-	protected boolean isFinished() {
-		return false;//Robot.mastSubsystem.isAtTop();
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false; //Robot.mastSubsystem.isAtTop();
+    }
 
-	// Called once after isFinished returns true
-	@Override
-	protected void end() {
-		Robot.mastSubsystem.move(0);
-	}
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        Robot.mastSubsystem.move(0);
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-		Robot.mastSubsystem.move(0);
-	}
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    @Override
+    protected void interrupted() {
+        Robot.mastSubsystem.move(0);
+    }
 }

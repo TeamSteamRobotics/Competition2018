@@ -23,14 +23,14 @@ public class Drivetrain extends Subsystem {
     public Telemetry telemetry;
 
     private boolean isRamping = false;
-	
+
     public void initDefaultCommand() {}
 
     public void init() {
         left = new Side("left");
         right = new Side("right");
-        odo = new Odometry(this);
         ahrs = new AHRS(SPI.Port.kMXP);
+        odo = new Odometry(this);
         telemetry = new Telemetry();
     }
 
@@ -60,9 +60,7 @@ public class Drivetrain extends Subsystem {
         right.stopPID();
     }
 
-    public boolean isRamping() {
-        return isRamping;
-    }
+    public boolean isRamping() { return isRamping; }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
         double leftMotorOutput;
@@ -92,7 +90,6 @@ public class Drivetrain extends Subsystem {
 
         left.set(leftMotorOutput);
         right.set(rightMotorOutput);
-
     }
 
     public class Side {
@@ -126,7 +123,7 @@ public class Drivetrain extends Subsystem {
 
             follower.follow(master);
 
-            quadrature.setDistancePerPulse(2 * Math.PI/2048.0); //should make getRate() return rad/s
+            quadrature.setDistancePerPulse(2 * Math.PI / 2048.0); //should make getRate() return rad/s
         }
 
         public void set(double percentOutput) {
@@ -134,39 +131,23 @@ public class Drivetrain extends Subsystem {
             master.set(ControlMode.PercentOutput, percentOutput);
         }
 
-        public void startPID() {
-            PIDLoop.startPeriodic(0.01);
-        }
+        public void startPID() { PIDLoop.startPeriodic(0.01); }
 
-        public void stopPID() {
-            PIDLoop.stop();
-        }
+        public void stopPID() { PIDLoop.stop(); }
 
-        public void setSpeed(double setpoint) {
-            this.setpoint = setpoint;
-        }
+        public void setSpeed(double setpoint) { this.setpoint = setpoint; }
 
-        void startRamping() {
-            master.configOpenloopRamp(0.5, 1000);
-        }
+        void startRamping() { master.configOpenloopRamp(0.5, 1000); }
 
-        void stopRamping() {
-                master.configOpenloopRamp(0, 1000);
-        }
+        void stopRamping() { master.configOpenloopRamp(0, 1000); }
 
-        public int get() {
-            return quadrature.get();
-        }
+        public int get() { return quadrature.get(); }
 
-        public double getRate() {
-            return quadrature.getRate();
-        }
+        public double getRate() { return quadrature.getRate(); }
     }
 
     public class Telemetry {
-        public double
-                leftPct, leftAmps, leftEnc,
-                rightPct, rightAmps, rightEnc;
+        public double leftPct, leftAmps, leftEnc, rightPct, rightAmps, rightEnc;
 
         public void update() {
             leftPct = left.master.getMotorOutputPercent();

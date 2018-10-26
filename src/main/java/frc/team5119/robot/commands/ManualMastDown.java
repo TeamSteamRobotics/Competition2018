@@ -14,40 +14,39 @@ import frc.team5119.robot.Robot;
  * An example command.  You can replace me with your own command.
  */
 public class ManualMastDown extends Command {
-	public ManualMastDown() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.mastSubsystem);
-	}
+    public ManualMastDown() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.mastSubsystem);
+    }
 
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
-	}
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {}
 
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
-		if (true) {//Robot.mastSubsystem.isAtBottom()) {
-			Robot.mastSubsystem.move(.5);
-		}
-	}
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        if (true) { //Robot.mastSubsystem.isAtBottom()) {
+            Robot.mastSubsystem.move(.5);
+        }
+    }
 
-	// Make this return true when this Command no longer needs to run execute()
-	@Override
-	protected boolean isFinished() {
-		return false;//Robot.mastSubsystem.isAtBottom();
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false; //Robot.mastSubsystem.isAtBottom();
+    }
 
-	// Called once after isFinished returns true
-	@Override
-	protected void end() {
-		Robot.mastSubsystem.move(0);
-	}
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        Robot.mastSubsystem.move(0);
+    }
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
-		Robot.mastSubsystem.move(0);
-	}
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    @Override
+    protected void interrupted() {
+        Robot.mastSubsystem.move(0);
+    }
 }

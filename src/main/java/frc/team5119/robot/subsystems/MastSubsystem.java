@@ -19,45 +19,37 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class MastSubsystem extends Subsystem {
-	//Motors
-		Talon mastMotor = new Talon(3);
-	//Sensors
-		//DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
-		//DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
-		DigitalInput topSwitch = new DigitalInput(RobotMap.mastTop);
-		Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
-	//False positive protection: raise to stop mast from stopping prematurely
-		protected int numTrues=0;
-	
-	public void initDefaultCommand() {
-		setDefaultCommand(new MaintainMastLevel());
-	}
+    //Motors
+    Talon mastMotor = new Talon(3);
+    //Sensors
+    //DigitalInput bottomSwitch = new DigitalInput(RobotMap.mastBottom);
+    //DigitalInput originSwitch = new DigitalInput(RobotMap.mastOrigin);
+    DigitalInput topSwitch = new DigitalInput(RobotMap.mastTop);
+    Encoder encoder = new Encoder(RobotMap.mastEncA, RobotMap.mastEncB, false);
+    //False positive protection: raise to stop mast from stopping prematurely
+    protected int numTrues = 0;
 
-	public void move(double speed) {
-		mastMotor.set(speed);
-	}
-	
-	public boolean isAtBottom() {
-		return false;//!bottomSwitch.get();
-	}
-	
-	public boolean isAtOrigin() {
-		return false;//originSwitch.get();
-	}
-	
-	public boolean isAtTop() {
-		if(topSwitch.get()) {
-			numTrues++;
-		}else {
-			numTrues=0;
-		}
-		return numTrues >= 10;
-	}
-	
-	public double getPosition() {
-		return encoder.get();
-	}
-	public void resetEncoder() {
-		encoder.reset();
-	}
+    public void initDefaultCommand() { setDefaultCommand(new MaintainMastLevel()); }
+
+    public void move(double speed) { mastMotor.set(speed); }
+
+    public boolean isAtBottom() {
+        return false; //!bottomSwitch.get();
+    }
+
+    public boolean isAtOrigin() {
+        return false; //originSwitch.get();
+    }
+
+    public boolean isAtTop() {
+        if (topSwitch.get()) {
+            numTrues++;
+        } else {
+            numTrues = 0;
+        }
+        return numTrues >= 10;
+    }
+
+    public double getPosition() { return encoder.get(); }
+    public void resetEncoder() { encoder.reset(); }
 }

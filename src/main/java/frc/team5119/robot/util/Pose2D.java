@@ -14,7 +14,5 @@ public class Pose2D {
         this.theta = theta;
     }
 
-    public Pose2D copy(){
-        return new Pose2D(x, y, theta);
-    }
+    public Pose2D copy() { return new Pose2D(x, y, theta); }
 }

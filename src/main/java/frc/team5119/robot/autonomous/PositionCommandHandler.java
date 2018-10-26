@@ -15,28 +15,22 @@ public class PositionCommandHandler {
      * @param bounds [xmin, xmax, ymin, ymax]
      * @param command command to run when in those bounds
      */
-    public void add( double[] bounds, Command command ) {
-        commandList.put(bounds, command);
-    }
+    public void add(double[] bounds, Command command) { commandList.put(bounds, command); }
 
     /**
      * @param otherMap HashMap to add to the list
      */
-    public void add( Map<double[],Command> otherMap ) {
-        commandList.putAll(otherMap);
-    }
+    public void add(Map<double[], Command> otherMap) { commandList.putAll(otherMap); }
 
     /**
      * @param location current robot location
      */
     public void run(Pose2D location) {
-        for ( Map.Entry<double[], Command> entry : commandList.entrySet() ) {
+        for (Map.Entry<double[], Command> entry : commandList.entrySet()) {
             if (isIn(entry.getKey(), location)) {
-                if (!entry.getValue().isRunning())
-                    entry.getValue().start();
+                if (!entry.getValue().isRunning()) entry.getValue().start();
             } else {
-                if (entry.getValue().isRunning())
-                    entry.getValue().cancel();
+                if (entry.getValue().isRunning()) entry.getValue().cancel();
             }
         }
     }
@@ -46,9 +40,7 @@ public class PositionCommandHandler {
     }
 
     static public PositionCommandHandler getInstance() {
-        if (instance == null) {
-            instance = new PositionCommandHandler();
-        }
+        if (instance == null) { instance = new PositionCommandHandler(); }
 
         return instance;
     }

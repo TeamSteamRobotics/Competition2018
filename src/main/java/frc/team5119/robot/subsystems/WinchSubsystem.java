@@ -15,18 +15,13 @@ import frc.team5119.robot.RobotMap;
  * The subsystem that controls the winch.
  */
 public class WinchSubsystem extends Subsystem {
-	//Motors
-		Talon winchMotor = new Talon(RobotMap.winchMotor);
-		
-	//Speed Modifier: set to 1 for no speed cap
-		double speedModifier = 1;
+    //Motors
+    Talon winchMotor = new Talon(RobotMap.winchMotor);
 
-	public void initDefaultCommand() {
-		
-	}
-	
-	public void move(double speed) {
-		winchMotor.set(speed*speedModifier);
-		
-	}
+    //Speed Modifier: set to 1 for no speed cap
+    double speedModifier = 1;
+
+    public void initDefaultCommand() {}
+
+    public void move(double speed) { winchMotor.set(speed * speedModifier); }
 }
