@@ -50,7 +50,8 @@ public class RamseteFollower extends Command {
         e_theta = Util.boundHalfRadians(path.get(segment).heading - currentPose.theta);
 
         v = v_d * Math.cos(e_theta) + k1 * e_x;
-        w = Math.max(-Math.PI, Math.min(Math.PI, w_d + k2 * sinE_thetaOverE_theta() * e_y + k1 * e_theta)); //clamp to (-pi, pi)
+        w = Math.max(-Math.PI, Math.min(Math.PI,
+                                        w_d + k2 * sinE_thetaOverE_theta() * e_y + k1 * e_theta)); //clamp to (-pi, pi)
 
         w_L = (Constants.k_wheelbase * w - 2 * v) / (-2 * Constants.k_wheelRadius);
         w_R = (Constants.k_wheelbase * w + 2 * v) / (2 * Constants.k_wheelRadius);
@@ -65,7 +66,7 @@ public class RamseteFollower extends Command {
 
     public void end() {
         Robot.drivetrain.stopPID();
-        Robot.drivetrain.arcadeDrive(0,0);
+        Robot.drivetrain.arcadeDrive(0, 0);
     }
 
     public boolean isFinished() { return segment >= path.length() - 1; }
