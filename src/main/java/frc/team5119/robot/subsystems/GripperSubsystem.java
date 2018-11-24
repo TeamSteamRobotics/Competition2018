@@ -17,37 +17,26 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class GripperSubsystem extends Subsystem {
-	//Motors
-		Talon gripMotor = new Talon(RobotMap.gripperMotor);
-	
-	//Sensors
-		DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
-		DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
-		DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
-		DigitalInput hookLimit = new DigitalInput(RobotMap.gripperHook);
-	
-	//Safety cap: set to 1 when in normal driving
-		double speedModifier = 1;
-	
-	public void initDefaultCommand() {
-	}
-	
-	public void move(double speed) {
-		gripMotor.set(speed*speedModifier);
-	}
-	
-	public boolean isFullClosed() {
-		return !closedLimit.get();
-	}
-	
-	public boolean isFullOpen() {
-		return !openLimit.get();
-	}
-	
-	public boolean isBoxGrabbed() {
-		return !boxGrabbedLimit.get();
-	}
-	public boolean isHookReleased() {
-		return !hookLimit.get();
-	}
+    //Motors
+    Talon gripMotor = new Talon(RobotMap.gripperMotor);
+
+    //Sensors
+    DigitalInput closedLimit = new DigitalInput(RobotMap.gripperClosed);
+    DigitalInput openLimit = new DigitalInput(RobotMap.gripperOpen);
+    DigitalInput boxGrabbedLimit = new DigitalInput(RobotMap.gripperBox);
+    DigitalInput hookLimit = new DigitalInput(RobotMap.gripperHook);
+
+    //Safety cap: set to 1 when in normal driving
+    double speedModifier = 1;
+
+    public void initDefaultCommand() {}
+
+    public void move(double speed) { gripMotor.set(speed * speedModifier); }
+
+    public boolean isFullClosed() { return !closedLimit.get(); }
+
+    public boolean isFullOpen() { return !openLimit.get(); }
+
+    public boolean isBoxGrabbed() { return !boxGrabbedLimit.get(); }
+    public boolean isHookReleased() { return !hookLimit.get(); }
 }

@@ -16,17 +16,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team5119.robot.autonomous.RamseteFollower;
+import frc.team5119.robot.commands.Drive;
+import frc.team5119.robot.subsystems.*;
+import frc.team5119.robot.util.Telemetry;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
 
-import java.io.IOException;
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
-import frc.team5119.robot.autonomous.AutonomousInit;
-import frc.team5119.robot.autonomous.Strategy;
-import frc.team5119.robot.commands.*;
-import frc.team5119.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,169 +40,186 @@ import frc.team5119.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final MastSubsystem mastSubsystem = new MastSubsystem();
-	public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
-	public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
-	public static final Strategy strategy = new Strategy();
-	public static final AutonomousInit autonomousinit = new AutonomousInit();
-	public static VisionSubsystem visionSubsystem;
-	public static final GyroSubsystem gyroSubsystem = new GyroSubsystem();
-	public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
-	public static OI m_oi;
-	
-	public static DriverStation driverStation = DriverStation.getInstance();
-	public static String switchPositions = "LLR";//driverStation.getGameSpecificMessage();
-	
-    public static Logger logger = Logger.getLogger("RobotLog");  
+    public static final Drivetrain drivetrain = new Drivetrain();
+    public static final MastSubsystem mastSubsystem = new MastSubsystem();
+    public static final WinchSubsystem winchSubsystem = new WinchSubsystem();
+    public static final GripperSubsystem gripperSubsystem = new GripperSubsystem();
+    public static VisionSubsystem visionSubsystem;
+    public static final AutoSwitchSubsystem autoSwitchSubsystem = new AutoSwitchSubsystem();
+    public static OI m_oi;
+
+    public static final Telemetry telemetry = new Telemetry();
+
+    public static final DriverStation driverStation = DriverStation.getInstance();
+    public static String gameData;
+
+    public static Logger logger = Logger.getLogger("RobotLog");
     FileHandler fh;
-    
-    
-	
-	public static VideoSink server;
-	public static UsbCamera cam0;
-	public static UsbCamera cam1;
-	public static UsbCamera cam2;
 
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+    HashMap<String, Trajectory> trajectories;
 
-	/**
+    public static VideoSink server;
+    public static UsbCamera cam0;
+    public static UsbCamera cam1;
+    public static UsbCamera cam2;
+
+    public static RamseteFollower follower;
+
+    Command m_teleopCommand = new Drive();
+    SendableChooser<String> m_chooser = new SendableChooser<>();
+
+    /**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	@Override
-	public void robotInit() {
-		
-		try {  
+    @Override
+    public void robotInit() {
 
-	        // This block configure the logger with handler and formatter  
-			fh = new FileHandler("/home/lvuser/robotLog-"+LocalDateTime.now()+".log"); // THIS COULD BREAK. IF SO, GET RID OF LocalDateTime.now()
-	        logger.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  
+        try {
 
-	        // the following statement is used to log any messages  
-	        //logger.info("My first log");  
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler("/home/lvuser/robotLog-" + LocalDateTime.now() +
+                                 ".log"); // THIS COULD BREAK. IF SO, GET RID OF LocalDateTime.now()
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
 
-	    } catch (SecurityException e) {  
-	        e.printStackTrace();  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
+            // the following statement is used to log any messages
+            //logger.info("My first log");
 
-	    logger.info("Hi How r u?");
-		cam0 = CameraServer.getInstance().startAutomaticCapture("0",0);
-		cam1 = CameraServer.getInstance().startAutomaticCapture("1",1);
-//		cam2 = CameraServer.getInstance().startAutomaticCapture("2", 2);
-		
-		server = CameraServer.getInstance().getServer();
-		server.setSource(cam0);
-		visionSubsystem = new VisionSubsystem();
-		m_oi = new OI();
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
-		
-	}
+        } catch (Exception e) { e.printStackTrace(); }
 
-	/**
+        logger.info("Hi How r u?");
+        cam0 = CameraServer.getInstance().startAutomaticCapture("0", 0);
+        cam1 = CameraServer.getInstance().startAutomaticCapture("1", 1);
+        //		cam2 = CameraServer.getInstance().startAutomaticCapture("2", 2);
+
+        server = CameraServer.getInstance().getServer();
+        server.setSource(cam0);
+        visionSubsystem = new VisionSubsystem();
+        m_oi = new OI();
+
+        drivetrain.init();
+
+        // AUTO STUFF
+        trajectories = getTrajectoriesfromDirectory(Constants.k_pathLocation);
+        m_chooser.addDefault("none", null);
+        for (String key : trajectories.keySet()) {
+            m_chooser.addObject(key, key);
+        }
+        SmartDashboard.putData("Auto mode", m_chooser);
+        // END AUTO STUFF
+    }
+
+    public void robotPeriodic() { telemetry.sendTeleop(); }
+
+    /**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
-	@Override
-	public void disabledInit() {
+    @Override
+    public void disabledInit() {
+        if (m_teleopCommand != null) { m_teleopCommand.cancel(); }
+    }
 
-	}
+    @Override
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+        mastSubsystem.resetEncoder();
+    }
 
-	@Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-		gyroSubsystem.resetGyro();
-		mastSubsystem.resetEncoder();
-	//	SmartDashboard.putNumber("autoPosition", autoSwitchSubsystem.getPosition());
-	}
-
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+    /**
+	 * resets everything
 	 */
-	@Override
-	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-		mastSubsystem.resetEncoder();
-		
-		autonomousinit.init();
-		/*if(autoSwitchSubsystem.getPosition() == -1) {
-			m_autonomousCommand = null;//new LeftAutonomous();
-		}else if (autoSwitchSubsystem.getPosition() == 1) {
-			m_autonomousCommand = null;//new RightAutonomous();
-		}else {
-			m_autonomousCommand = new CenterAutonomous();
-		}
-		m_autonomousCommand = new CenterAutonomous();
-*/
-		 strategy.start();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+    @Override
+    public void autonomousInit() {
+        gameData = driverStation.getGameSpecificMessage();
+        if (drivetrain.isRamping()) {
+            DriverStation.reportError("Ramping is on in autonomous! You should know better than that!", false);
+        }
+        mastSubsystem.resetEncoder();
+        follower =
+            new RamseteFollower(trajectories.get(m_chooser.getSelected() == null ? "easy" : m_chooser.getSelected()));
+        follower.start();
+    }
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			//m_autonomousCommand.start();
-		}
-	}
-
-	/**
+    /**
 	 * This function is called periodically during autonomous.
 	 */
-	@Override
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-	}
+    @Override
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+        //PositionCommandHandler.getInstance().run(drivetrain.odo.getPose());
+        SmartDashboard.putNumber("left rate", drivetrain.left.getRate());
+        SmartDashboard.putNumber("rght rate", drivetrain.right.getRate());
+    }
 
-	@Override
-	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
-	}
+    @Override
+    public void teleopInit() {
+        // this starts the teleop command if it isn't null
+        if (m_teleopCommand != null) { m_teleopCommand.start(); }
+        drivetrain.startRamping();
+        drivetrain.stopPID();
+    }
 
-	/**
+    /**
 	 * This function is called periodically during operator control.
 	 */
-	@Override
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("bottom", mastSubsystem.isAtBottom());
-		SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
-		SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
-		SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
-		SmartDashboard.putBoolean("gripper full closed", gripperSubsystem.isFullClosed());
-		SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
-		SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
-		SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
-		SmartDashboard.putNumber("gyro", gyroSubsystem.gyroAngle());
-	}
+    @Override
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
+        if (!m_teleopCommand.isRunning()) { m_teleopCommand.start(); }
+        SmartDashboard.putBoolean("bottom", mastSubsystem.isAtBottom());
+        SmartDashboard.putBoolean("origin", mastSubsystem.isAtOrigin());
+        SmartDashboard.putBoolean("top", mastSubsystem.isAtTop());
+        SmartDashboard.putNumber("encoder", mastSubsystem.getPosition());
+        SmartDashboard.putBoolean("gripper full closed", gripperSubsystem.isFullClosed());
+        SmartDashboard.putBoolean("gripper full open", gripperSubsystem.isFullOpen());
+        SmartDashboard.putBoolean("hook limit", gripperSubsystem.isHookReleased());
+        SmartDashboard.putNumber("autoSwitch", autoSwitchSubsystem.getPosition());
+        SmartDashboard.putNumber("gyro", drivetrain.ahrs.getYaw());
+    }
 
-	/**
+    /**
 	 * This function is called periodically during test mode.
 	 */
-	@Override
-	public void testPeriodic() {
-	}
+    @Override
+    public void testPeriodic() {}
+
+    // huge thanks to 3863 Pantherbotics for saying "just use our csv code"
+    public HashMap<String, Trajectory> getTrajectoriesfromDirectory(String dir) {
+        HashMap<String, Trajectory> paths = new HashMap<>();
+        ArrayList<File> filesInFolder;
+
+        filesInFolder = listf(dir);
+        for (int i = filesInFolder.size() - 1; i >= 0; i--) {
+            if (!filesInFolder.get(i).getName().contains("_source_Jaci.csv")) { filesInFolder.remove(i); }
+        }
+
+        for (File traj : filesInFolder) {
+            System.out.println(traj.getName());
+            paths.put(traj.getName().replace("_source_Jaci.csv", ""), Pathfinder.readFromCSV(traj));
+        }
+
+        return paths;
+    }
+
+    public ArrayList<File> listf(String directoryName) {
+        File directory = new File(directoryName);
+
+        ArrayList<File> resultList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] fList = directory.listFiles();
+        resultList.addAll(Arrays.asList(fList));
+        for (File file : fList) {
+            if (file.isFile()) {
+                System.out.println(file.getAbsolutePath());
+            } else if (file.isDirectory()) {
+                resultList.addAll(listf(file.getAbsolutePath()));
+            }
+        }
+        return resultList;
+    }
 }
