@@ -1,7 +1,7 @@
 package frc.team5119.robot.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.team5119.robot.util.Pose2D;
+import org.teamsteamrobotics.lib.utils.Pose2D;
 
 import java.util.HashMap;
 import java.util.Map;

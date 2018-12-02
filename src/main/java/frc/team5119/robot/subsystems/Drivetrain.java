@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team5119.robot.Constants;
 import frc.team5119.robot.RobotMap;
 import frc.team5119.robot.util.Odometry;
+import org.teamsteamrobotics.lib.wrappers.LazySRX;
 
 /**
  *
@@ -94,28 +95,28 @@ public class Drivetrain extends Subsystem {
 
     public class Side {
 
-        final TalonSRX master, follower;
+        final LazySRX master, follower;
         private final Encoder quadrature;
         private volatile double setpoint = 0;
-        private volatile double lastRate = 0;
+        private volatile double lastError = 0;
 
         private Notifier PIDLoop = new Notifier(() -> {
-            double rate = getRate();
+            double error = (setpoint - getRate());
             double output = Constants.kf * setpoint;
-            output += Constants.kp * (setpoint - rate);
-            output -= Constants.kd * (rate - lastRate);
+            output += Constants.kp * error;
+            output += Constants.kd * ((error - lastError) / 0.02);
             set(output);
-            lastRate = rate;
+            lastError = error;
         });
 
         Side(String side) {
             if (side.equals("left")) {
-                master = new TalonSRX(RobotMap.frontLeftTalon);
-                follower = new TalonSRX(RobotMap.backLeftTalon);
+                master = new LazySRX(RobotMap.frontLeftTalon);
+                follower = new LazySRX(RobotMap.backLeftTalon);
                 quadrature = new Encoder(RobotMap.leftDriveEncA, RobotMap.leftDriveEncB, false);
             } else {
-                master = new TalonSRX(RobotMap.frontRightTalon);
-                follower = new TalonSRX(RobotMap.backRightTalon);
+                master = new LazySRX(RobotMap.frontRightTalon);
+                follower = new LazySRX(RobotMap.backRightTalon);
                 master.setInverted(true);
                 follower.setInverted(true);
                 quadrature = new Encoder(RobotMap.rightDriveEncA, RobotMap.rightDriveEncB, false);

@@ -7,10 +7,14 @@ import frc.team5119.robot.Robot;
 public class Telemetry {
     private NetworkTable instance;
 
-    public void sendTeleop() {
+    public void sendAll() {
         if (instance == null) { instance = NetworkTableInstance.getDefault().getTable("Live Dashboard"); }
 
         Robot.drivetrain.telemetry.update();
+
+        instance.getEntry("Robot X").setDouble(Robot.drivetrain.odo.getX());
+        instance.getEntry("Robot Y").setDouble(Robot.drivetrain.odo.getY());
+        instance.getEntry("Robot Heading").setDouble(Robot.drivetrain.odo.getTheta());
 
         instance.getEntry("Drive Left Pct").setDouble(Robot.drivetrain.telemetry.leftPct);
         instance.getEntry("Drive Left Amps").setDouble(Robot.drivetrain.telemetry.leftAmps);
@@ -29,10 +33,6 @@ public class Telemetry {
         instance.getEntry("Path X").setDouble(Robot.follower.telemetry.pathX);
         instance.getEntry("Path Y").setDouble(Robot.follower.telemetry.pathY);
         instance.getEntry("Path Heading").setDouble(Robot.follower.telemetry.pathHeading);
-
-        instance.getEntry("Robot X").setDouble(Robot.drivetrain.odo.getX());
-        instance.getEntry("Robot Y").setDouble(Robot.drivetrain.odo.getY());
-        instance.getEntry("Robot Heading").setDouble(Robot.drivetrain.odo.getTheta());
 
         instance.getEntry("Game Data").setString(Robot.gameData);
     }

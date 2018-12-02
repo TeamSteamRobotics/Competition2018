@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
         // END AUTO STUFF
     }
 
-    public void robotPeriodic() { telemetry.sendTeleop(); }
+    public void robotPeriodic() { telemetry.sendAll(); }
 
     /**
 	 * This function is called once each time the robot enters Disabled mode.

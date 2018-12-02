@@ -2,16 +2,11 @@ package frc.team5119.robot.autonomous;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team5119.robot.Constants;
 import frc.team5119.robot.Robot;
 import frc.team5119.robot.util.Util;
-import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import frc.team5119.robot.util.Pose2D;
-import jaci.pathfinder.Trajectory.Segment;
-
-import java.nio.file.Path;
+import org.teamsteamrobotics.lib.utils.Pose2D;
 
 public class RamseteFollower extends Command {
 
@@ -32,6 +27,7 @@ public class RamseteFollower extends Command {
     public void initialize() {
         telemetry = new Telemetry();
         Robot.drivetrain.startPID();
+        Robot.drivetrain.ahrs.reset();
         Robot.drivetrain.odo.setPose(path.get(0).x, path.get(0).y, path.get(0).heading);
         NetworkTableInstance.getDefault().getTable("Live Dashboard").getEntry("Reset").setBoolean(true);
     }
@@ -50,7 +46,7 @@ public class RamseteFollower extends Command {
         e_theta = Util.boundHalfRadians(path.get(segment).heading - currentPose.theta);
 
         v = v_d * Math.cos(e_theta) + k1 * e_x;
-        w = Math.max(-Math.PI, Math.min(Math.PI,
+        w = Math.max(-2*Math.PI, Math.min(2*Math.PI,
                                         w_d + k2 * sinE_thetaOverE_theta() * e_y + k1 * e_theta)); //clamp to (-pi, pi)
 
         w_L = (Constants.k_wheelbase * w - 2 * v) / (-2 * Constants.k_wheelRadius);
